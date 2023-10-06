@@ -83,8 +83,13 @@ public class EjercicioAController implements Initializable{
     @FXML
     public void aceptar(ActionEvent event) {
         try {
-        	
-        	if (txtProfesion.getText().toString().equals("") || txtNumHermanos.getText().toString().equals("") ) {
+        	boolean resultado = true;
+        	try {
+                Integer.parseInt(txtNumHermanos.getText().toString());
+            } catch (NumberFormatException excepcion) {
+                resultado = false;
+            }
+        	if (txtProfesion.getText().toString().equals("") || resultado==false || txtNumHermanos.getText().toString().equals("") || (cbDeporte.isSelected() && lvDeportes.getSelectionModel().isEmpty())) {
         		String errProf = "";
         		if (txtProfesion.getText().toString().equals("")) {
 					errProf = "Hay que rellenar el campo profesion\n";
@@ -93,7 +98,13 @@ public class EjercicioAController implements Initializable{
         		String errNumHer = "";
         		if (txtNumHermanos.getText().toString().equals("")) {
 					errNumHer = "Hay que rellenar el campo Nº Hermanos\n";
+				}else {
+					if (resultado==false) {
+						errNumHer = "Hay que rellenar el campo Nº Hermanos con un numero\n";
+					}
 				}
+        		
+        		
         		
         		String errDepor = "";
         		if (cbDeporte.isSelected()) {
@@ -122,19 +133,24 @@ public class EjercicioAController implements Initializable{
 				}
 				String deport="";
 				if (cbDeporte.isSelected()) {
+					deport="Deportes que practicas:\n";
 					ObservableList<String> lsD = lvDeportes.getSelectionModel().getSelectedItems();
 					for (int i = 0; i < lsD.size(); i++) {
 						deport = deport + lsD.get(i)+"\n";
 					}
-					
-						
 				}
 				
+				String comp = "";
+				String tele = "";
+				String cine = "";
+				comp = (int)sdCompras.getValue()+".0\n";
+				tele = (int)sdTelevision.getValue()+".0\n";
+				cine = (int)sdCine.getValue()+".0\n";
 				//Ventana de informacion
 	        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	            alert.setTitle("TUS DATOS");
 	            alert.setHeaderText(null);
-	            alert.setContentText("Profesion: "+prof+"Nº de hermanos: "+numH+"Edad: "+edad+"Sexo: "+sexo+"Deportes que practicas:\n"+deport);
+	            alert.setContentText("Profesion: "+prof+"Nº de hermanos: "+numH+"Edad: "+edad+"Sexo: "+sexo+deport+"Grado de aficcion a las compras: "+comp+"Grado de aficcion a ver la television: "+tele+"Grado de aficcion a ir al cine: "+cine);
 	            alert.showAndWait();
 			}
         	
