@@ -10,4 +10,5 @@ module EjerciciosAF {
 	
 	opens application to javafx.graphics, javafx.fxml;
 	opens controllers to javafx.graphics, javafx.fxml;
+	opens model;
 }
