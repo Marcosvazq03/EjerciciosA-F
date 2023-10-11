@@ -33,7 +33,7 @@ public class EjercicioDController implements Initializable{
     private TableView<Persona> tbPersona;
 	
     
-    private ObservableList<Persona> o1;
+    
 
     @FXML
     void agregar(ActionEvent event) {
@@ -56,7 +56,5 @@ public class EjercicioDController implements Initializable{
     	lsNombre.setCellValueFactory(new PropertyValueFactory<Persona, String>("nombre"));
     	lsApellidos.setCellValueFactory(new PropertyValueFactory<Persona, String>("apellido"));
     	lsEdad.setCellValueFactory(new PropertyValueFactory<Persona, Integer>("edad"));
-    	
-    	o1= FXCollections.observableArrayList();
     }
 }
