@@ -43,7 +43,8 @@ public class EjercicioCController implements Initializable{
     @FXML
     void agregar(ActionEvent event) {
     	try {
-        	boolean resultado = true;
+        	//Comprobar que en un numero
+    		boolean resultado = true;
         	try {
                 Integer.parseInt(txtEdad.getText().toString());
             } catch (NumberFormatException excepcion) {
@@ -105,6 +106,11 @@ public class EjercicioCController implements Initializable{
 		            alert.setHeaderText(null);
 		            alert.setContentText("Persona añadida correctamente");
 		            alert.showAndWait();
+		          
+		            //Limpiar campos
+			        txtNombre.setText("");
+			        txtApellido.setText("");
+			        txtEdad.setText("");
 				}
 				
 			}
@@ -145,13 +151,83 @@ public class EjercicioCController implements Initializable{
 	        alert.setHeaderText(null);
 	        alert.setContentText("Persona eliminada correctamente");
 	        alert.showAndWait();
+	        
+	        //Limpiar campos
+	        txtNombre.setText("");
+	        txtApellido.setText("");
+	        txtEdad.setText("");
 		}
     	
     }
 
     @FXML
     void modificar(ActionEvent event) {
-
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbPersona.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ninguna persona de la tabla!");
+            alert.showAndWait();
+		}else {
+			//Comprobar que en un numero
+    		boolean resultado = true;
+        	try {
+                Integer.parseInt(txtEdad.getText().toString());
+            } catch (NumberFormatException excepcion) {
+                resultado = false;
+            }
+        	//Alerta introducir todos los datos
+        	if (txtNombre.getText().toString().equals("") || resultado==false || txtApellido.getText().toString().equals("") || txtEdad.getText().toString().equals("")) {
+        		String errNombre = "";
+        		if (txtNombre.getText().toString().equals("")) {
+					errNombre = "El campo nombre es obligatorio\n";
+				}
+        		
+        		String errApellido = "";
+        		if (txtApellido.getText().toString().equals("")) {
+					errApellido = "El campo apellido es obligatorio\n";
+				}
+				
+        		String errEdad = "";
+        		if (txtEdad.getText().toString().equals("")) {
+					errEdad = "El campo edad es obligatorio";
+				}else {
+					if (resultado==false) {
+						errEdad = "El campo edad tiene que ser numerico";
+					}
+				}
+        		Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("TUS DATOS");
+                alert.setHeaderText(null);
+                alert.setContentText(errNombre+errApellido+errEdad);
+                alert.showAndWait();
+        	}else {
+				//Modificar Persona de la tabla
+		    	for (int i = 0; i < o1.size(); i++) {
+					if (tbPersona.getSelectionModel().getSelectedItem()==o1.get(i)) {
+						o1.get(i).setNombre(txtNombre.getText().toString());
+						o1.get(i).setApellido(txtApellido.getText().toString());
+						o1.get(i).setEdad(Integer.parseInt(txtEdad.getText().toString()));
+					}
+				}
+		    	tbPersona.getItems().clear();
+				tbPersona.getItems().addAll(o1);
+				
+				//Ventana de informacion
+		    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		        alert.setTitle("Info");
+		        alert.setHeaderText(null);
+		        alert.setContentText("Persona modificada correctamente");
+		        alert.showAndWait();
+		        
+		        //Limpiar campos
+		        txtNombre.setText("");
+		        txtApellido.setText("");
+		        txtEdad.setText("");
+			}
+		}
     }
     
     @Override
