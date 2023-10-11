@@ -14,7 +14,7 @@ public class EjercicioC extends Application{
             GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioCfxml.fxml"));
             Scene scene = new Scene(root,700,500);
             //scene.getStylesheets().add(getClass() .getResource("/css/application.css").toExternalForm());
-            primaryStage.setTitle("EjercicioA");
+            primaryStage.setTitle("EjercicioC");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch(Exception e) {
