@@ -118,6 +118,42 @@ public class EjercicioCController implements Initializable{
             alert.showAndWait();
         }
     }
+    
+    @FXML
+    void eliminar(ActionEvent event) {
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbPersona.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ninguna persona de la tabla!");
+            alert.showAndWait();
+		}else {
+			//Eliminar Persona de la tabla
+	    	for (int i = 0; i < o1.size(); i++) {
+				if (tbPersona.getSelectionModel().getSelectedItem()==o1.get(i)) {
+					o1.remove(i);
+				}
+			}
+	    	tbPersona.getItems().clear();
+			tbPersona.getItems().addAll(o1);
+			
+			//Ventana de informacion
+	    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	        alert.setTitle("Info");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Persona eliminada correctamente");
+	        alert.showAndWait();
+		}
+    	
+    }
+
+    @FXML
+    void modificar(ActionEvent event) {
+
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//Valores de la columna de la tabla
