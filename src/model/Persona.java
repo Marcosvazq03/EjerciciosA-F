@@ -1,8 +1,10 @@
 package model;
 
+import java.util.Objects;
+
 //Clase Persona
 public class Persona {
-
+	
 	private String nombre;
 	private String apellido;
 	private int edad;
@@ -37,5 +39,21 @@ public class Persona {
 		this.edad = edad;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(apellido, edad, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(apellido, other.apellido) && edad == other.edad && Objects.equals(nombre, other.nombre);
+	}
 	
 }
