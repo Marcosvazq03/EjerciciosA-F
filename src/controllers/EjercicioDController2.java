@@ -3,18 +3,13 @@ package controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Persona;
 
 public class EjercicioDController2 implements Initializable{
 
@@ -27,7 +22,7 @@ public class EjercicioDController2 implements Initializable{
     @FXML
     private TextField txtNombre;
     
-    private ObservableList<Persona> o1;
+    private EjercicioDController ejDController;
 
     @FXML
     void cancelar(ActionEvent event) {
@@ -75,31 +70,9 @@ public class EjercicioDController2 implements Initializable{
                 alert.setContentText(errNombre+errApellido+errEdad);
                 alert.showAndWait();
 			}else {
-				boolean esta=false;
-				if (o1 !=null) {
-					//Comprobar si existe en la tabla
-					for (int i = 0; i < o1.size(); i++) {
-						if (o1.get(i).getNombre().equals(txtNombre.getText().toString()) && o1.get(i).getApellido().equals(txtApellido.getText().toString()) &&  o1.get(i).getEdad() == Integer.parseInt(txtEdad.getText().toString())) {
-							esta=true;
-						}
-					}
-				}
-				if (esta) {
-					//Alerta persona existe en la tabla
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-	                alert.setTitle("TUS DATOS");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Persona ya existe!");
-	                alert.showAndWait();
-				}else {
-					//Crear persona y añadirla a la tabla
-					Persona p1 = new Persona(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()));
-					o1.add(p1);
-					/*tbPersona.getItems().clear();
-					tbPersona.getItems().addAll(o1);
-					tbPersona.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);*/
-					
-					//Ventana de informacion
+				
+				if (ejDController.crearPersona(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
+	              //Ventana de informacion
 		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		            alert.setTitle("Info");
 		            alert.setHeaderText(null);
@@ -112,7 +85,13 @@ public class EjercicioDController2 implements Initializable{
 		        	//Me devuelve la ventana donde se encuentra el elemento
 		        	Stage stage = (Stage) source.getScene().getWindow();    
 		        	stage.close();
-		            
+				}else {
+					//Alerta persona existe en la tabla
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+	                alert.setTitle("TUS DATOS");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Persona ya existe!");
+	                alert.showAndWait();
 				}
 				
 			}
@@ -128,7 +107,10 @@ public class EjercicioDController2 implements Initializable{
     }
     
     public void initialize(URL location, ResourceBundle resources) {
-    	o1= FXCollections.observableArrayList();
+    }
+    
+    public void setControlerD(EjercicioDController ej) {
+    	this.ejDController = ej;
     }
     
 }
