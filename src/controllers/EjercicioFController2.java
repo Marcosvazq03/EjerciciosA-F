@@ -132,7 +132,7 @@ public class EjercicioFController2 implements Initializable{
 		}
     }
     
-    public void setControlerE(EjercicioFController ej) {
+    public void setControlerF(EjercicioFController ej) {
     	this.ejFController = ej;
     }
     

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +24,9 @@ import model.Persona;
 
 public class EjercicioFController implements Initializable{
 
+	@FXML
+    private TextField txtFiltro;
+	
 	@FXML
     private Button bntAgregar;
 	
@@ -38,6 +43,9 @@ public class EjercicioFController implements Initializable{
     private TableView<Persona> tbPersona;
     
     private boolean modificar;
+    
+    // Crear un FilteredList respaldado por la lista de objetos
+    FilteredList<Persona> filteredList;
 	
     public boolean isModificar() {
 		return modificar;
@@ -49,7 +57,9 @@ public class EjercicioFController implements Initializable{
 
 	private ObservableList<Persona> o1;
     
-    public boolean crearPersona(String nombre, String apellido, int edad) {
+	
+	
+	public boolean crearPersona(String nombre, String apellido, int edad) {
     	Persona p = new Persona(nombre, apellido, edad);
     	boolean esta=false;
 		if (o1 !=null) {
@@ -89,7 +99,7 @@ public class EjercicioFController implements Initializable{
     void agregar(ActionEvent event) {
     	modificar=false;
     	try {
-    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioEfxml2.fxml"));
+    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioFfxml2.fxml"));
 	    	Stage stage = new Stage();
 	    	Parent root = loader.load();
 	    	EjercicioFController2 ejFC2 = loader.getController();
@@ -148,7 +158,7 @@ public class EjercicioFController implements Initializable{
 		}else {
 			modificar=true;
 			try {
-	    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioEfxml2.fxml"));
+	    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioFfxml2.fxml"));
 		    	Stage stage = new Stage();
 		    	Parent root = loader.load();
 		    	EjercicioFController2 ejFC2 = loader.getController();
@@ -166,6 +176,16 @@ public class EjercicioFController implements Initializable{
 		}
     }
     
+    @FXML
+    void exportar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void importar(ActionEvent event) {
+
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//Valores de la columna de la tabla
@@ -175,6 +195,24 @@ public class EjercicioFController implements Initializable{
     	
     	o1= FXCollections.observableArrayList();
     	
+    	filteredList = new FilteredList<Persona>(o1);
+    	
+    	//tbPersona = new TableView<Persona>(filteredList);
+    	
     	modificar=false;
+    	
+    	txtFiltro = new TextField();
+    	
+    	// Agregar un ChangeListener a la propiedad text del TextField
+        txtFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Actualizar el predicado de filtrado con el nuevo valor del TextField
+            filteredList.setPredicate(objeto -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true; // Mostrar todos los objetos si no hay texto en el TextField
+                }
+                // Comparar el valor del TextField con la propiedad del objeto
+                return objeto.getNombre().contains(newValue);
+            });
+        });
     }
 }
