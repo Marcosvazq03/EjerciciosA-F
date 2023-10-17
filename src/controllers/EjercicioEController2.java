@@ -22,7 +22,7 @@ public class EjercicioEController2 implements Initializable{
     @FXML
     private TextField txtNombre;
     
-    private EjercicioDController ejDController;
+    private static EjercicioEController ejEController;
 
     @FXML
     void cancelar(ActionEvent event) {
@@ -70,13 +70,14 @@ public class EjercicioEController2 implements Initializable{
                 alert.setContentText(errNombre+errApellido+errEdad);
                 alert.showAndWait();
 			}else {
-				
-				if (ejDController.crearPersona(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
-	              //Ventana de informacion
+				if (ejEController.isModificar()) {
+					ejEController.modificarPersona(txtNombre.getText().toString(), txtApellido.getText().toString(), Integer.parseInt(txtEdad.getText().toString()));
+					
+					//Ventana de informacion
 		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		            alert.setTitle("Info");
 		            alert.setHeaderText(null);
-		            alert.setContentText("Persona añadida correctamente");
+		            alert.setContentText("Persona editada correctamente");
 		            alert.showAndWait();
 		          
 		            //Cerrar ventana modal
@@ -86,14 +87,29 @@ public class EjercicioEController2 implements Initializable{
 		        	Stage stage = (Stage) source.getScene().getWindow();    
 		        	stage.close();
 				}else {
-					//Alerta persona existe en la tabla
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-	                alert.setTitle("TUS DATOS");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Persona ya existe!");
-	                alert.showAndWait();
+					if (ejEController.crearPersona(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
+						//Ventana de informacion
+			        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			            alert.setTitle("Info");
+			            alert.setHeaderText(null);
+			            alert.setContentText("Persona añadida correctamente");
+			            alert.showAndWait();
+			          
+			            //Cerrar ventana modal
+			        	//Me devuelve el elemento al que hice click
+			        	Node source = (Node) event.getSource();     
+			        	//Me devuelve la ventana donde se encuentra el elemento
+			        	Stage stage = (Stage) source.getScene().getWindow();    
+			        	stage.close();
+					}else {
+						//Alerta persona existe en la tabla
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+		                alert.setTitle("TUS DATOS");
+		                alert.setHeaderText(null);
+		                alert.setContentText("Persona ya existe!");
+		                alert.showAndWait();
+					}
 				}
-				
 			}
         	
         } catch (NumberFormatException e) {
@@ -107,10 +123,17 @@ public class EjercicioEController2 implements Initializable{
     }
     
     public void initialize(URL location, ResourceBundle resources) {
+    	if (ejEController!=null) {
+    		if (ejEController.isModificar()) {
+				txtNombre.setText(ejEController.getTbPersona().getSelectionModel().getSelectedItem().getNombre());
+				txtApellido.setText(ejEController.getTbPersona().getSelectionModel().getSelectedItem().getApellido());
+				txtEdad.setText(ejEController.getTbPersona().getSelectionModel().getSelectedItem().getEdad()+"");
+			}
+		}
     }
     
-    public void setControlerD(EjercicioDController ej) {
-    	this.ejDController = ej;
+    public void setControlerE(EjercicioEController ej) {
+    	this.ejEController = ej;
     }
     
 }

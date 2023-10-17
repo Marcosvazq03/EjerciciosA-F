@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,8 +36,18 @@ public class EjercicioEController implements Initializable{
     
     @FXML
     private TableView<Persona> tbPersona;
+    
+    private boolean modificar;
 	
-    private ObservableList<Persona> o1;
+    public boolean isModificar() {
+		return modificar;
+	}
+
+	public TableView<Persona> getTbPersona() {
+		return tbPersona;
+	}
+
+	private ObservableList<Persona> o1;
     
     public boolean crearPersona(String nombre, String apellido, int edad) {
     	Persona p = new Persona(nombre, apellido, edad);
@@ -61,15 +72,28 @@ public class EjercicioEController implements Initializable{
 		}
     }
     
+    public void modificarPersona(String nombre, String apellido, int edad) {
+    	//Modificar Persona de la tabla
+    	for (int i = 0; i < o1.size(); i++) {
+			if (tbPersona.getSelectionModel().getSelectedItem()==o1.get(i)) {
+				o1.get(i).setNombre(nombre);
+				o1.get(i).setApellido(apellido);
+				o1.get(i).setEdad(edad);
+			}
+		}
+    	tbPersona.getItems().clear();
+		tbPersona.getItems().addAll(o1);
+    }
 
     @FXML
     void agregar(ActionEvent event) {
+    	modificar=false;
     	try {
-    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioDfxml2.fxml"));
+    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioEfxml2.fxml"));
 	    	Stage stage = new Stage();
 	    	Parent root = loader.load();
-	    	EjercicioDController2 ejDC2 = loader.getController();
-	    	//ejDC2.setControlerD(this);
+	    	EjercicioEController2 ejEC2 = loader.getController();
+	    	ejEC2.setControlerE(this);
 	        stage.setScene(new Scene(root,400,200));
 	        stage.setResizable(false);
 	        stage.initOwner(this.bntAgregar.getScene().getWindow());
@@ -81,6 +105,67 @@ public class EjercicioEController implements Initializable{
 		}
     }
     
+    @FXML
+    void eliminar(ActionEvent event) {
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbPersona.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ninguna persona de la tabla!");
+            alert.showAndWait();
+		}else {
+			//Eliminar Persona de la tabla
+	    	for (int i = 0; i < o1.size(); i++) {
+				if (tbPersona.getSelectionModel().getSelectedItem()==o1.get(i)) {
+					o1.remove(i);
+				}
+			}
+	    	tbPersona.getItems().clear();
+			tbPersona.getItems().addAll(o1);
+			
+			//Ventana de informacion
+	    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	        alert.setTitle("Info");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Persona eliminada correctamente");
+	        alert.showAndWait();
+	        
+		}
+    }
+
+    @FXML
+    void modificar(ActionEvent event) {
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbPersona.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ninguna persona de la tabla!");
+            alert.showAndWait();
+		}else {
+			modificar=true;
+			try {
+	    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioEfxml2.fxml"));
+		    	Stage stage = new Stage();
+		    	Parent root = loader.load();
+		    	EjercicioEController2 ejEC2 = loader.getController();
+		    	ejEC2.setControlerE(this);
+		        stage.setScene(new Scene(root,400,200));
+		        stage.setResizable(false);
+		        stage.initOwner(this.bntAgregar.getScene().getWindow());
+		        stage.setTitle("Editar Persona");
+		        stage.initModality(Modality.APPLICATION_MODAL);
+		        stage.show();
+		        
+	    	}catch (Exception e) {
+	    		e.printStackTrace();
+			}
+		}
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//Valores de la columna de la tabla
@@ -89,5 +174,7 @@ public class EjercicioEController implements Initializable{
     	lsEdad.setCellValueFactory(new PropertyValueFactory<Persona, Integer>("edad"));
     	
     	o1= FXCollections.observableArrayList();
+    	
+    	modificar=false;
     }
 }
