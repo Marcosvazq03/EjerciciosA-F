@@ -1,10 +1,13 @@
 package controllers;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -96,7 +99,7 @@ public class EjercicioFController implements Initializable{
     }
     
     // Metodos para archivos
-    private void readCSV() {
+    private void importarCSV() {
     	 
     	FileChooser fileChooser = new FileChooser();
     	// Agregar filtros para facilitar la busqueda
@@ -147,6 +150,8 @@ public class EjercicioFController implements Initializable{
         			o1.add(p);
         		}
             }
+            
+            br.close();
  
         } catch (FileNotFoundException ex) {
         	System.out.println(ex.getMessage());
@@ -156,6 +161,52 @@ public class EjercicioFController implements Initializable{
  
     }
 
+    private void exportarCSV() {
+   	 
+    	FileChooser fileChooser = new FileChooser();
+    	// Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV", "*.csv")
+        );
+        // Obtener csv seleccionada
+        Stage stage = new Stage();
+        File csvFile = fileChooser.showOpenDialog(stage);
+
+        // Mostar csv
+        File csv = new File("");
+        if (csvFile != null) {
+            csv = new File(csvFile.getAbsolutePath());
+        }
+ 
+        BufferedWriter bw;
+ 
+        try {
+            bw = new BufferedWriter(new FileWriter(csv));
+        	PrintWriter pw = new PrintWriter(bw);
+        	
+        	pw.println("Nombre,Apellidos,Edad");
+            
+            for (int i = 0; i < o1.size(); i++) {
+    			pw.println(o1.get(i).getNombre().toString()+","+o1.get(i).getApellido().toString()+","+o1.get(i).getEdad());
+    		}
+            
+            pw.close();
+            
+            //Ventana de informacion
+        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
+            alert.setHeaderText(null);
+            alert.setContentText("Tabla exportada correctamente");
+            alert.showAndWait();
+            
+        } catch (FileNotFoundException ex) {
+        	System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+        	System.out.println(ex.getMessage());
+        }
+ 
+    }
+    
     @FXML
     void agregar(ActionEvent event) {
     	modificar=false;
@@ -237,12 +288,12 @@ public class EjercicioFController implements Initializable{
     
     @FXML
     void exportar(ActionEvent event) {
-
+    	exportarCSV();
     }
 
     @FXML
     void importar(ActionEvent event) {
-    	readCSV();
+    	importarCSV();
     }
     
     @Override
