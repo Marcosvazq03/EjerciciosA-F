@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,26 +74,19 @@ public class EjercicioFController implements Initializable{
 		}else {
 			//Crear persona y añadirla a la tabla
 			o1.add(p);
-			tbPersona.getItems().clear();
-			tbPersona.getItems().addAll(o1);
-			tbPersona.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 			
 			return true;
-            
 		}
     }
     
     public void modificarPersona(String nombre, String apellido, int edad) {
     	//Modificar Persona de la tabla
+    	Persona p = new Persona(nombre, apellido, edad);
     	for (int i = 0; i < o1.size(); i++) {
 			if (tbPersona.getSelectionModel().getSelectedItem()==o1.get(i)) {
-				o1.get(i).setNombre(nombre);
-				o1.get(i).setApellido(apellido);
-				o1.get(i).setEdad(edad);
+				o1.set(i, p);
 			}
 		}
-    	tbPersona.getItems().clear();
-		tbPersona.getItems().addAll(o1);
     }
 
     @FXML
@@ -195,13 +189,11 @@ public class EjercicioFController implements Initializable{
     	
     	o1= FXCollections.observableArrayList();
     	
-    	filteredList = new FilteredList<Persona>(o1);
-    	
-    	//tbPersona = new TableView<Persona>(filteredList);
-    	
     	modificar=false;
     	
-    	txtFiltro = new TextField();
+    	txtFiltro.setPromptText("Buscar...");
+    	
+    	filteredList = new FilteredList<Persona>(o1, b -> true);
     	
     	// Agregar un ChangeListener a la propiedad text del TextField
         txtFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -214,5 +206,10 @@ public class EjercicioFController implements Initializable{
                 return objeto.getNombre().contains(newValue);
             });
         });
+        
+        SortedList<Persona> sortedData = new SortedList<Persona>(filteredList);
+    	sortedData.comparatorProperty().bind(tbPersona.comparatorProperty());
+    	
+    	tbPersona.setItems(sortedData);
     }
 }

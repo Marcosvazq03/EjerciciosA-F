@@ -57,7 +57,7 @@
          </GridPane.margin>
       </Button>
       <Label text="Filtrar por nombre:" />
-      <TextField prefWidth="193.0" GridPane.columnIndex="1">
+      <TextField fx:id="txtFiltro" prefWidth="193.0" GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
