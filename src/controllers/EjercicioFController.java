@@ -1,5 +1,10 @@
 package controllers;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Persona;
@@ -59,7 +65,7 @@ public class EjercicioFController implements Initializable{
 	private ObservableList<Persona> o1;
     
 	
-	
+	// Metodos de Persona
 	public boolean crearPersona(String nombre, String apellido, int edad) {
     	Persona p = new Persona(nombre, apellido, edad);
     	boolean esta=false;
@@ -87,6 +93,67 @@ public class EjercicioFController implements Initializable{
 				o1.set(i, p);
 			}
 		}
+    }
+    
+    // Metodos para archivos
+    private void readCSV() {
+    	 
+    	FileChooser fileChooser = new FileChooser();
+    	// Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV", "*.csv")
+        );
+        // Obtener csv seleccionada
+        Stage stage = new Stage();
+        File csvFile = fileChooser.showOpenDialog(stage);
+
+        // Mostar csv
+        File csv = new File("");
+        if (csvFile != null) {
+            csv = new File(csvFile.getAbsolutePath());
+        }
+        
+        String FieldDelimiter = ",";
+ 
+        BufferedReader br;
+ 
+        try {
+            br = new BufferedReader(new FileReader(csv));
+ 
+            String line;
+            
+            //Leo la primera linea para que no introducirla en la tabla
+            br.readLine();
+            
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(FieldDelimiter, -1);
+                Persona p = new Persona(fields[0], fields[1],Integer.parseInt(fields[2]));
+                boolean esta=false;
+        		if (o1 != null) {
+        			//Comprobar si existe en la tabla
+        			if (o1.contains(p)) {
+        				esta=true;
+        			}
+        		}
+        		if (esta) {
+        			//Ventana de informacion
+		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		            alert.setTitle("Info");
+		            alert.setHeaderText(null);
+		            alert.setContentText(fields[0]+" ya existe en la tabla y no se puede añadir");
+		            alert.showAndWait();
+        		}else {
+        			//Crear persona y añadirla a la tabla
+        			o1.add(p);
+        		}
+            }
+ 
+        } catch (FileNotFoundException ex) {
+        	System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+        	System.out.println(ex.getMessage());
+        }
+ 
     }
 
     @FXML
@@ -126,8 +193,6 @@ public class EjercicioFController implements Initializable{
 					o1.remove(i);
 				}
 			}
-	    	tbPersona.getItems().clear();
-			tbPersona.getItems().addAll(o1);
 			
 			//Ventana de informacion
 	    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -177,7 +242,7 @@ public class EjercicioFController implements Initializable{
 
     @FXML
     void importar(ActionEvent event) {
-
+    	readCSV();
     }
     
     @Override
@@ -187,7 +252,7 @@ public class EjercicioFController implements Initializable{
     	lsApellidos.setCellValueFactory(new PropertyValueFactory<Persona, String>("apellido"));
     	lsEdad.setCellValueFactory(new PropertyValueFactory<Persona, Integer>("edad"));
     	
-    	o1= FXCollections.observableArrayList();
+    	o1 = FXCollections.observableArrayList();
     	
     	modificar=false;
     	
