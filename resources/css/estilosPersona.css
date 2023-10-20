@@ -1,0 +1,17 @@
+.button {
+    -fx-background-color: #009e2e;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-background-color:  #f2f2f2;
+}
+
+.text-field:focused {
+    -fx-background-color: #ffffff;
+}
+
+#grid-pane {
+    -fx-background-image: url('images/fondo.jpg')
+}

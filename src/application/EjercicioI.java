@@ -13,7 +13,7 @@ public class EjercicioI extends Application{
         try {
             GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioIfxml.fxml"));
             Scene scene = new Scene(root,700,500);
-            //scene.getStylesheets().add(getClass() .getResource("/css/application.css").toExternalForm());
+            scene.getStylesheets().add(getClass() .getResource("/css/estilosPersona.css").toExternalForm());
             primaryStage.setTitle("PERSONA");
             primaryStage.setScene(scene);
             primaryStage.show();
