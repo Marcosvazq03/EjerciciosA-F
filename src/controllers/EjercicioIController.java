@@ -16,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +28,15 @@ import model.Persona;
 
 public class EjercicioIController implements Initializable{
 
+	@FXML
+    private MenuItem ctEliminar;
+
+    @FXML
+    private ContextMenu ctMenu;
+
+    @FXML
+    private MenuItem ctModificar;
+	
 	@FXML
     private TextField txtFiltro;
 	
@@ -177,6 +188,17 @@ public class EjercicioIController implements Initializable{
 		}
     }
     
+    
+    @FXML
+    void menuContext(ActionEvent event) {
+    	ctModificar.setOnAction((event2) -> {
+    	    modificar(event2);
+    	});
+    	ctEliminar.setOnAction((event2) -> {
+    	    eliminar(event2);
+    	});
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//Valores de la columna de la tabla
@@ -212,5 +234,15 @@ public class EjercicioIController implements Initializable{
     	sortedData.comparatorProperty().bind(tbPersona.comparatorProperty());
     	
     	tbPersona.setItems(sortedData);
+		
+    	tbPersona.setOnContextMenuRequested(event -> {
+    		if (tbPersona.getSelectionModel().isEmpty()) {
+    			ctMenu.hide();
+			}
+    		else {
+				ctMenu.show(tbPersona,event.getScreenX(),event.getScreenY());
+			}
+    		
+    	});
     }
 }

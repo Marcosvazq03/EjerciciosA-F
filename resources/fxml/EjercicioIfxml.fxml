@@ -2,15 +2,19 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EjercicioIController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EjercicioIController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0" minWidth="10.0" prefWidth="290.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="437.0" minWidth="10.0" prefWidth="290.0" />
@@ -19,9 +23,11 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="437.0" minWidth="10.0" prefWidth="290.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="60.0" minHeight="15.0" prefHeight="41.0" />
-    <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+    <RowConstraints />
+    <RowConstraints maxHeight="52.0" minHeight="6.0" prefHeight="42.0" />
+    <RowConstraints maxHeight="60.0" minHeight="9.0" prefHeight="40.0" />
+      <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="240.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
@@ -31,12 +37,12 @@
       <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="bntAgregar" mnemonicParsing="false" onAction="#agregar" text="Agregar Persona" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="TOP">
+      <Button fx:id="bntAgregar" mnemonicParsing="false" onAction="#agregar" text="Agregar Persona" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="11" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="20.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <TableView fx:id="tbPersona" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="8">
+      <TableView fx:id="tbPersona" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="5" GridPane.rowIndex="3" GridPane.rowSpan="8">
         <columns>
           <TableColumn fx:id="lsNombre" prefWidth="244.0" text="NOMBRE" />
           <TableColumn fx:id="lsApellidos" prefWidth="247.0" text="APELLIDOS" />
@@ -45,23 +51,36 @@
          <GridPane.margin>
             <Insets bottom="15.0" right="15.0" top="15.0" />
          </GridPane.margin>
+         <contextMenu>
+            <ContextMenu fx:id="ctMenu" onAction="#menuContext">
+              <items>
+                <MenuItem fx:id="ctModificar" mnemonicParsing="false" text="Modificar" />
+                  <MenuItem fx:id="ctEliminar" mnemonicParsing="false" text="Eliminar" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TableView>
-      <Button mnemonicParsing="false" onAction="#modificar" text="Modificar Persona" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="TOP">
+      <Button mnemonicParsing="false" onAction="#modificar" text="Modificar Persona" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#eliminar" text="Eliminar Persona" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.valignment="TOP">
+      <Button mnemonicParsing="false" onAction="#eliminar" text="Eliminar Persona" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="11" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="20.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <Label text="Filtrar por nombre:" />
-      <TextField fx:id="txtFiltro" prefWidth="193.0" GridPane.columnIndex="1">
+      <Label text="Filtrar por nombre:" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <TextField fx:id="txtFiltro" prefWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
       </TextField>
+      <ImageView fitHeight="79.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioIimg/contactos.jpeg" />
+         </image>
+      </ImageView>
    </children>
    <padding>
       <Insets left="20.0" />
