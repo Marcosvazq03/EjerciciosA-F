@@ -2,13 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -29,46 +31,6 @@
       <RowConstraints maxHeight="70.40001220703124" minHeight="10.0" prefHeight="55.79997558593749" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorBlazingRed.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorElectricBlue.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorLapisluxuryBlue.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorMidnightBlack.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorMoonwalkGrey.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorPepperWhite.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorThunderGray.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../img/EjercicioJimg/colores/colorVolcaninOrange.jpg" />
-         </image>
-      </ImageView>
       <Label text="Selecciona tu color favorito" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
       <Label text="CONFIGURA TU MINI COOPER" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="1" />
@@ -77,7 +39,7 @@
             <Image url="@../img/EjercicioJimg/cooperLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+      <ImageView fx:id="imgLucesA" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
          <image>
             <Image url="@../img/EjercicioJimg/lucesOff.png" />
          </image>
@@ -85,15 +47,133 @@
             <Insets left="15.0" />
          </GridPane.margin>
       </ImageView>
-      <ImageView fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+      <ImageView fx:id="imgMRojo" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
          <image>
             <Image url="@../img/EjercicioJimg/coches/miniBlazingRed.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="283.0" fitWidth="473.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="8" GridPane.rowIndex="3" GridPane.rowSpan="2">
+      <ImageView fx:id="imgLuces" fitHeight="283.0" fitWidth="473.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.rowIndex="3" GridPane.rowSpan="2">
          <image>
             <Image url="@../img/EjercicioJimg/autoLuz.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="imgLucesE" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/lucesOn.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMAzul" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniElectricBlue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMAzulOsc" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniLapisluxuryBlue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMNegro" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniMidnightBlack.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMGris" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniMoonwalkGrey.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMBlanco" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniPepperWhite.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMGrisOsc" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniThunderGray.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgMAmarillo" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/coches/miniVolcaninOrange.png" />
+         </image>
+      </ImageView>
+      <ToggleButton mnemonicParsing="false" onAction="#selectColores" prefWidth="41.0" selected="true" GridPane.rowIndex="6">
+         <toggleGroup>
+            <ToggleGroup fx:id="colores" />
+         </toggleGroup>
+         <graphic>
+            <ImageView fx:id="imgCRojo" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorBlazingRed.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="1" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCAzul" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorElectricBlue.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="2" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCAzulOsc" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorLapisluxuryBlue.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="3" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCNegro" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorMidnightBlack.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="4" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCGris" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorMoonwalkGrey.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="5" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCBlanco" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorPepperWhite.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="6" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCGrisOsc" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorThunderGray.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="7" GridPane.rowIndex="6">
+         <graphic>
+            <ImageView fx:id="imgCAmarillo" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/colores/colorVolcaninOrange.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
    </children>
 </GridPane>

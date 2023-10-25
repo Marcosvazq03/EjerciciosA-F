@@ -235,6 +235,7 @@ public class EjercicioIController implements Initializable{
     	
     	tbPersona.setItems(sortedData);
 		
+    	//Para que el Menu Contextual aparezca solo cuando seleccione una persona
     	tbPersona.setOnContextMenuRequested(event -> {
     		if (tbPersona.getSelectionModel().isEmpty()) {
     			ctMenu.hide();
@@ -242,7 +243,6 @@ public class EjercicioIController implements Initializable{
     		else {
 				ctMenu.show(tbPersona,event.getScreenX(),event.getScreenY());
 			}
-    		
     	});
     }
 }

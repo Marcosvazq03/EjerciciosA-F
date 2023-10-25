@@ -15,12 +15,12 @@ public class EjercicioJ extends Application{
 	@Override
 	public void start(Stage primaryStage) {
         try {
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("fxml/EjercicioJfxml.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioJfxml.fxml"));
             root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
             Scene scene = new Scene(root,480,460);
             //scene.getStylesheets().add(getClass() .getResource("/css/estilosPersona.css").toExternalForm());
             primaryStage.setTitle("MINI COOPER");
-            primaryStage.getIcons().add(new Image("img/EjercicioJimg/Cooper.png"));
+            primaryStage.getIcons().add(new Image(getClass().getResource("/img/EjercicioJimg/Cooper.png").toString()));
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch(Exception e) {
