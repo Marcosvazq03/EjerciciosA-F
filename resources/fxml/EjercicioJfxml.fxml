@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -9,8 +10,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EjercicioJController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -32,34 +34,15 @@
   </rowConstraints>
    <children>
       <Label text="Selecciona tu color favorito" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
       <Label text="CONFIGURA TU MINI COOPER" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="1" />
       <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <image>
             <Image url="@../img/EjercicioJimg/cooperLogo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgLucesA" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-         <image>
-            <Image url="@../img/EjercicioJimg/lucesOff.png" />
-         </image>
-         <GridPane.margin>
-            <Insets left="15.0" />
-         </GridPane.margin>
-      </ImageView>
       <ImageView fx:id="imgMRojo" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
          <image>
             <Image url="@../img/EjercicioJimg/coches/miniBlazingRed.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgLuces" fitHeight="283.0" fitWidth="473.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.rowIndex="3" GridPane.rowSpan="2">
-         <image>
-            <Image url="@../img/EjercicioJimg/autoLuz.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgLucesE" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <image>
-            <Image url="@../img/EjercicioJimg/lucesOn.png" />
          </image>
       </ImageView>
       <ImageView fx:id="imgMAzul" fitHeight="285.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2">
@@ -97,7 +80,12 @@
             <Image url="@../img/EjercicioJimg/coches/miniVolcaninOrange.png" />
          </image>
       </ImageView>
-      <ToggleButton mnemonicParsing="false" onAction="#selectColores" prefWidth="41.0" selected="true" GridPane.rowIndex="6">
+      <ImageView fx:id="imgLuces" fitHeight="283.0" fitWidth="473.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="8" GridPane.rowIndex="3" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../img/EjercicioJimg/autoLuz.png" />
+         </image>
+      </ImageView>
+      <ToggleButton fx:id="tbRojo" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" prefWidth="41.0" selected="true" text="rojo" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <toggleGroup>
             <ToggleGroup fx:id="colores" />
          </toggleGroup>
@@ -111,8 +99,11 @@
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="azul" toggleGroup="$colores" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCAzul" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -120,8 +111,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="2" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="azulOsc" toggleGroup="$colores" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCAzulOsc" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -129,8 +123,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="3" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="negro" toggleGroup="$colores" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCNegro" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -138,8 +135,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="4" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="gris" toggleGroup="$colores" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCGris" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -147,8 +147,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="5" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="blanco" toggleGroup="$colores" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCBlanco" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -156,8 +159,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="6" GridPane.rowIndex="6">
+      <ToggleButton graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="grisOsc" toggleGroup="$colores" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCGrisOsc" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -165,8 +171,11 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
-      <ToggleButton mnemonicParsing="false" toggleGroup="$colores" GridPane.columnIndex="7" GridPane.rowIndex="6">
+      <ToggleButton ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#selectColores" text="amarillo" toggleGroup="$colores" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <graphic>
             <ImageView fx:id="imgCAmarillo" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -174,6 +183,33 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
       </ToggleButton>
+      <Button fx:id="btnApagar" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#apagar" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <graphic>
+            <ImageView fx:id="imgLucesA" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/lucesOff.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
+      </Button>
+      <Button fx:id="btnEncender" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#encender" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <graphic>
+            <ImageView fx:id="imgLucesE" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/EjercicioJimg/lucesOn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="0.1" />
+         </font>
+      </Button>
    </children>
 </GridPane>
