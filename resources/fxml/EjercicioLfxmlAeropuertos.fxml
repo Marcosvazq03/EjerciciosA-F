@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -61,8 +62,11 @@
       <RadioButton mnemonicParsing="false" text="Publicos" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="15.0" />
-         </GridPane.margin></RadioButton>
-      <RadioButton mnemonicParsing="false" text="Privados" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         </GridPane.margin>
+         <toggleGroup>
+            <ToggleGroup fx:id="gpPrivacidad" />
+         </toggleGroup></RadioButton>
+      <RadioButton mnemonicParsing="false" text="Privados" toggleGroup="$gpPrivacidad" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="15.0" />
          </GridPane.margin></RadioButton>
