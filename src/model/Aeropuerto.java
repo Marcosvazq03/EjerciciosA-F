@@ -2,13 +2,17 @@ package model;
 
 import java.util.Objects;
 
-//Clase Persona
+//Clase Aeropuesto
 public class Aeropuerto {
 	
 	private String nombre, pais, ciudad, calle;
-	private int numero, id, ano, capacidad, nSocios;
+	private int numero, id, ano, capacidad, nSocios, financiacion, nTrabajadores;
 	
-	public Aeropuerto(int id,String nombre, String pais, String ciudad, String calle, int numero, int ano, int capacidad, int nSocios) {
+	public Aeropuerto() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Aeropuerto(int id,String nombre, String pais, String ciudad, String calle, int numero, int ano, int capacidad) {
 		this.id=id;
 		this.nombre=nombre;
 		this.pais=pais;
@@ -17,14 +21,11 @@ public class Aeropuerto {
 		this.numero=numero;
 		this.ano=ano;
 		this.capacidad=capacidad;
-		this.nSocios=nSocios;
 	}
-
 
 	public String getNombre() {
 		return nombre;
 	}
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -62,59 +63,57 @@ public class Aeropuerto {
 		this.numero = numero;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
-
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
 	public int getAno() {
 		return ano;
 	}
-
-
 
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
 
-
-
 	public int getCapacidad() {
 		return capacidad;
 	}
-
-
 
 	public void setCapacidad(int capacidad) {
 		this.capacidad = capacidad;
 	}
 
-
-
-	public int getnSocios() {
+	public int getNSocios() {
 		return nSocios;
 	}
 
-
-
-	public void setnSocios(int nSocios) {
+	public void setNSocios(int nSocios) {
 		this.nSocios = nSocios;
 	}
+	
+	public int getFinanciacion() {
+		return financiacion;
+	}
 
+	public void setFinanciacion(int financiacion) {
+		this.financiacion = financiacion;
+	}
 
+	public int getNTrabajadores() {
+		return nTrabajadores;
+	}
+
+	public void setNTrabajadores(int nTrabajadores) {
+		this.nTrabajadores = nTrabajadores;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, calle, capacidad, ciudad, id, nSocios, nombre, numero, pais);
+		return Objects.hash(ano, calle, capacidad, ciudad, id, nombre, numero, pais);
 	}
 
 	@Override
@@ -127,7 +126,7 @@ public class Aeropuerto {
 			return false;
 		Aeropuerto other = (Aeropuerto) obj;
 		return ano == other.ano && Objects.equals(calle, other.calle) && capacidad == other.capacidad
-				&& Objects.equals(ciudad, other.ciudad) && id == other.id && nSocios == other.nSocios
+				&& Objects.equals(ciudad, other.ciudad) && id == other.id
 				&& Objects.equals(nombre, other.nombre) && numero == other.numero && Objects.equals(pais, other.pais);
 	}
 	

@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -51,7 +52,15 @@ public class EjercicioLControllerLogin implements Initializable{
 		}else {
 			if (aeDao.validarUser(txtUsuario.getText().toString(), txtPassword.getText().toString())) {
 				try {
-		    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAeropuertos.fxml"));
+					//Cerrar ventana modal
+		        	//Me devuelve el elemento al que hice click
+		        	Node source = (Node) event.getSource();     
+		        	//Me devuelve la ventana donde se encuentra el elemento
+		        	Stage stage2 = (Stage) source.getScene().getWindow();    
+		        	stage2.close();
+		        	
+		        	//Abrir ventana modal
+		    		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAeropuertos.fxml"));
 			    	Stage stage = new Stage();
 			    	EjercicioLControllerAeropuertos ejLC = new EjercicioLControllerAeropuertos();
 			    	loader.setController(ejLC);
