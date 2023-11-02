@@ -60,7 +60,7 @@ public class EjercicioLControllerLogin implements Initializable{
 		        	stage2.close();
 		        	
 		        	//Abrir ventana modal
-		    		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAeropuertos.fxml"));
+		    		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAeropuertos.fxml"));
 			    	Stage stage = new Stage();
 			    	EjercicioLControllerAeropuertos ejLC = new EjercicioLControllerAeropuertos();
 			    	loader.setController(ejLC);

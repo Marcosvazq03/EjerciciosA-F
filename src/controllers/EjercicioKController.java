@@ -35,38 +35,38 @@ public class EjercicioKController implements Initializable{
     
     private String selectImg(int num) {
     	String img = "";
-    	
-    	if (num==0) {
-    		img = "ZERO";
-		} 		
-    	if (num==1) { 
-			img = "ONE";
-    	}
-    	if (num==2) {
-			img = "TWO";
-    	}
-    	if (num==3) { 
-			img = "THREE";
-    	}
-    	if (num==4) {
-			img = "FOUR";
-    	}
-    	if (num==5) {
-			img = "FIVE";
-    	}
-    	if (num==6) {
-			img = "SIX";
-    	}
-    	if (num==7) {
-			img = "SEVEN";
-    	}
-    	if (num==8) {
-			img = "EIGHT";
-    	}
-    	if (num==9) {
-			img = "NINE";
-    	}
-		
+    	switch (num) {
+	    	case 0: {
+				img = "ZERO";
+			}
+			case 1: {
+				img = "ONE";
+			}
+			case 2: {
+				img = "TWO";
+			}
+			case 3: {
+				img = "THREE";
+			}
+			case 4: {
+				img = "FOUR";
+			}
+			case 5: {
+				img = "FIVE";
+			}
+			case 6: {
+				img = "SIX";
+			}
+			case 7: {
+				img = "SEVEN";
+			}
+			case 8: {
+				img = "EIGHT";
+			}
+			case 9: {
+				img = "NINE";
+			}
+		}
     	return img;
     }
 	
@@ -76,32 +76,15 @@ public class EjercicioKController implements Initializable{
 		
 		TimerTask task = new TimerTask() {
 	        public void run() {
-	        	//Sacar segundos
 	            int segundos = LocalDateTime.now().getSecond();
 	            String strSegundos = segundos<=9 ? "0"+segundos:""+segundos;
 	           
 	            int s2= Integer.parseInt(strSegundos.charAt(0) + "");
 	            int s1= Integer.parseInt(strSegundos.charAt(1) + "");
+	            
 	            imgS1.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(s1)+".png").toString()));
 	            imgS2.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(s2)+".png").toString()));
 				
-	            //Sacar minutos
-	            int minutos = LocalDateTime.now().getMinute();
-	            String strMinutos = minutos<=9 ? "0"+minutos:""+minutos;
-	           
-	            int m2= Integer.parseInt(strMinutos.charAt(0) + "");
-	            int m1= Integer.parseInt(strMinutos.charAt(1) + "");
-	            imgM1.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(m1)+".png").toString()));
-	            imgM2.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(m2)+".png").toString()));
-	            
-	            //Sacar horas
-	            int horas = LocalDateTime.now().getHour();
-	            String strHoras = horas<=9 ? "0"+horas:""+horas;
-	           
-	            int h2= Integer.parseInt(strHoras.charAt(0) + "");
-	            int h1= Integer.parseInt(strHoras.charAt(1) + "");
-	            imgH1.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(h1)+".png").toString()));
-	            imgH2.setImage(new Image(getClass().getResource("/img/EjercicioKimg/"+selectImg(h2)+".png").toString()));
 	        }
 	    };
 	    timer.scheduleAtFixedRate(task, 0, 1000);

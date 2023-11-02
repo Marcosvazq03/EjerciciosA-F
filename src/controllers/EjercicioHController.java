@@ -106,10 +106,10 @@ public class EjercicioHController implements Initializable{
 	    	Parent root = loader.load();
 	    	EjercicioHController2 ejFC2 = loader.getController();
 	    	ejFC2.setControlerH(this);
-	        stage.setScene(new Scene(root,500,700));
+	        stage.setScene(new Scene(root,400,200));
 	        stage.setResizable(false);
 	        stage.initOwner(this.bntAgregar.getScene().getWindow());
-	        stage.setTitle("AVIONES-AEROPUERTOS");
+	        stage.setTitle("Nueva Persona");
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	        stage.show();
     	}catch (Exception e) {

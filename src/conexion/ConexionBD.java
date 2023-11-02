@@ -9,6 +9,7 @@ public class ConexionBD {
     private Connection conexion;
     
     public ConexionBD() throws SQLException {
+    	
         String host = "localhost";
         String baseDatos = "personas";
         String usuario = "admin";
