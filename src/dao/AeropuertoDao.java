@@ -14,6 +14,56 @@ import model.Aeropuerto;
 public class AeropuertoDao {
     private ConexionBDAeropuertos conexion;
     
+    public int ultimoID() {
+    	//Saca el ultimo id
+    	int id=-1;
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select id from Persona";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+		            int idPersona = rs.getInt("id");
+		            if (idPersona>id) {
+						id=idPersona;
+					}
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+    	id=id+1;
+    	return id;
+    }
+    
+    public void insertPersona(int id,String nombre, String apellidos, int edad) {
+    	//Inserta objeto en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "INSERT INTO Persona(id,nombre,apellidos,edad)VALUES("+id+",'"+nombre+"','"+apellidos+"',"+edad+")";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    }
+    
+    public void modPersona(String nombreV,String nombre, String apellidos, int edad) {
+    	//Modifica objeto en la BBDD
+    	int id = buscarIDNombre(nombreV);
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "UPDATE personas.Persona SET nombre = '"+nombre+"', apellidos = '"+apellidos+"', edad = "+edad+" WHERE id = "+id;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    }
+    
     public boolean validarUser(String user, String password){
     	//Validar inicio de sesion
     	try {

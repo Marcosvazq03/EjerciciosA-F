@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Aeropuerto;
+import model.Persona;
 
 public class EjercicioLControllerAeropuertos implements Initializable{
     
@@ -96,6 +97,38 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		return modificar;
 	}
 
+    // Metodos de Aeropuerto
+ 	public boolean crearAeropuerto(String nombre, String apellido, int edad) {
+     	Aeropuerto p = new Aeropuerto(nombre, apellido, edad);
+     	boolean esta=false;
+ 		if (o1 !=null) {
+ 			//Comprobar si existe en la tabla
+ 			if (o1.contains(p)) {
+ 				esta=true;
+ 			}
+ 		}
+ 		if (esta) {
+ 			return false;
+ 		}else {
+ 			//Crear y añadirla a la tabla
+ 			aD.insertPersona(aD.ultimoID(), nombre, apellido, edad);
+ 			o1.add(p);
+ 			
+ 			return true;
+ 		}
+     }
+     
+     public void modificarAeropuerto(String nombre, String apellido, int edad) {
+     	//Modificar objeto de la tabla
+     	Aeropuerto p = new Aeropuerto(nombre, apellido, edad);
+     	for (int i = 0; i < o1.size(); i++) {
+ 			if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
+ 				aD.modPersona(tbAeropuerto.getSelectionModel().getSelectedItem().getNombre(),nombre, apellido, edad);
+ 				o1.set(i, p);
+ 			}
+ 		}
+     }
+    
 	@FXML
     void clickPrivado(ActionEvent event) {
     	o1.setAll(aD.cargarAeropuertosPri());

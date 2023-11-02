@@ -127,31 +127,24 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
         				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("") 
         				|| esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
         				|| esNumNTrabajadores==false) {
-            		String errNombre = "";
-            		if (txtNombre.getText().toString().equals("")) {
-    					errNombre = "El campo nombre es obligatorio\n";
-    				}
+            		String err = "";
+        			if (txtNombre.getText().toString().equals("") || txtPais.getText().toString().equals("") 
+        				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("")) {
+						err="Rellenar todos los campos\n";
+					}
+        			String err2 = "";
+        			if (esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
+            				|| esNumNTrabajadores==false) {
+						err2="Los campos no tienen el correcto formato";
+					}
             		
-            		String errApellido = "";
-            		if (txtApellido.getText().toString().equals("")) {
-    					errApellido = "El campo apellido es obligatorio\n";
-    				}
-    				
-            		String errEdad = "";
-            		if (txtEdad.getText().toString().equals("")) {
-    					errEdad = "El campo edad es obligatorio";
-    				}else {
-    					if (esNumNumero==false) {
-    						errEdad = "El campo edad tiene que ser numerico";
-    					}
-    				}
             		Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("TUS DATOS");
                     alert.setHeaderText(null);
-                    alert.setContentText(errNombre+errApellido+errEdad);
+                    alert.setContentText(err+err2);
                     alert.showAndWait();
     			}else {
-    				if (ejLControllerAeropuerto.isModificar()) {
+    				/*if (ejLControllerAeropuerto.isModificar()) {
     					ejLControllerAeropuerto.modificarPersona(txtNombre.getText().toString(), txtApellido.getText().toString(), Integer.parseInt(txtEdad.getText().toString()));
     					
     					//Ventana de informacion
@@ -167,13 +160,13 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
     		        	//Me devuelve la ventana donde se encuentra el elemento
     		        	Stage stage = (Stage) source.getScene().getWindow();    
     		        	stage.close();
-    				}else {
-    					if (ejLControllerAeropuerto.crearPersona(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
+    				}else {*/
+    					if (ejLControllerAeropuerto.crearAeropuerto(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
     						//Ventana de informacion
     			        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
     			            alert.setTitle("Info");
     			            alert.setHeaderText(null);
-    			            alert.setContentText("Persona añadida correctamente");
+    			            alert.setContentText("Aeropuerto añadido correctamente");
     			            alert.showAndWait();
     			          
     			            //Cerrar ventana modal
@@ -187,10 +180,10 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
     						Alert alert = new Alert(Alert.AlertType.ERROR);
     		                alert.setTitle("TUS DATOS");
     		                alert.setHeaderText(null);
-    		                alert.setContentText("Persona ya existe!");
+    		                alert.setContentText("Aeropuerto ya existe!");
     		                alert.showAndWait();
     					}
-    				}
+    				//}
     			}
 			}        	
         } catch (NumberFormatException e) {
