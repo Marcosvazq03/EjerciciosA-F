@@ -8,10 +8,6 @@ public class Aeropuerto {
 	private String nombre, pais, ciudad, calle;
 	private int numero, id, ano, capacidad, nSocios, financiacion, nTrabajadores;
 	
-	public Aeropuerto() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public Aeropuerto(int id,String nombre, String pais, String ciudad, String calle, int numero, int ano, int capacidad) {
 		this.id=id;
 		this.nombre=nombre;
