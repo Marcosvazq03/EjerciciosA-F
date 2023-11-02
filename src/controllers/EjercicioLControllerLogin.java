@@ -70,7 +70,7 @@ public class EjercicioLControllerLogin implements Initializable{
 			        stage.setScene(new Scene(root,800,500));
 			        //stage.setResizable(false);
 			        stage.initOwner(this.btnLogin.getScene().getWindow());
-			        stage.setTitle("Nueva Persona");
+			        stage.setTitle("Aeropuertos");
 			        stage.initModality(Modality.APPLICATION_MODAL);
 			        stage.show();
 		    	}catch (Exception e) {
