@@ -37,11 +37,15 @@ public class AeropuertoDao {
     	return id;
     }
     
-    public void insertPersona(int id,String nombre, String apellidos, int edad) {
+    private void insertDireccion() {
+    	
+    }
+    
+    public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad) {
     	//Inserta objeto en la BBDD
     	try {
             conexion = new ConexionBDAeropuertos();        	
-        	String consulta = "INSERT INTO Persona(id,nombre,apellidos,edad)VALUES("+id+",'"+nombre+"','"+apellidos+"',"+edad+")";
+        	String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion) VALUES("+id+",'"+nombre+"',"+anio+","+capacidad+", "+id_direccion+")";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
 			pstmt.execute();
 	        conexion.CloseConexion();
@@ -50,7 +54,7 @@ public class AeropuertoDao {
 	    }
     }
     
-    public void modPersona(String nombreV,String nombre, String apellidos, int edad) {
+   /* public void modPersona(String nombreV,String nombre, String apellidos, int edad) {
     	//Modifica objeto en la BBDD
     	int id = buscarIDNombre(nombreV);
     	try {
@@ -62,7 +66,7 @@ public class AeropuertoDao {
 	    } catch (SQLException e) {	    	
 	    	System.out.println(e.getMessage());
 	    }
-    }
+    }*/
     
     public boolean validarUser(String user, String password){
     	//Validar inicio de sesion

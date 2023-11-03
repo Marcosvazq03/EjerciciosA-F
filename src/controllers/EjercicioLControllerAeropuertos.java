@@ -98,8 +98,8 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	}
 
     // Metodos de Aeropuerto
- 	public boolean crearAeropuerto(String nombre, String apellido, int edad) {
-     	Aeropuerto p = new Aeropuerto(nombre, apellido, edad);
+ 	public boolean crearAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad) {
+     	Aeropuerto p = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad);
      	boolean esta=false;
  		if (o1 !=null) {
  			//Comprobar si existe en la tabla
@@ -111,7 +111,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			return false;
  		}else {
  			//Crear y añadirla a la tabla
- 			aD.insertPersona(aD.ultimoID(), nombre, apellido, edad);
+ 			aD.insertPersona(aD.ultimoID(), nombre, pais, ciudad, calle, numero, anio, capacidad);
  			o1.add(p);
  			
  			return true;
