@@ -27,7 +27,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Aeropuerto;
-import model.Persona;
 
 public class EjercicioLControllerAeropuertos implements Initializable{
     
@@ -81,8 +80,19 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     @FXML
     private RadioButton rbPublicos;
     
-    @FXML
+    public RadioButton getRbPrivados() {
+		return rbPrivados;
+	}
+
+	public RadioButton getRbPublicos() {
+		return rbPublicos;
+	}
+
+	@FXML
     private MenuItem miAniadir;
+    
+    @FXML
+    private MenuItem miEditar;
     
     private ObservableList<Aeropuerto> o1;
     
@@ -90,7 +100,11 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     
     private AeropuertoDao aD;
     
-    // Crear un FilteredList respaldado por la lista de objetos
+    public TableView<Aeropuerto> getTbAeropuerto() {
+		return tbAeropuerto;
+	}
+
+	// Crear un FilteredList respaldado por la lista de objetos
     private FilteredList<Aeropuerto> filteredList;
     
     public boolean isModificar() {
@@ -98,8 +112,8 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	}
 
     // Metodos de Aeropuerto
- 	public boolean crearAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad) {
-     	Aeropuerto p = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad);
+ 	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+     	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad);
      	boolean esta=false;
  		if (o1 !=null) {
  			//Comprobar si existe en la tabla
@@ -111,19 +125,31 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			return false;
  		}else {
  			//Crear y añadirla a la tabla
- 			aD.insertPersona(aD.ultimoID(), nombre, pais, ciudad, calle, numero, anio, capacidad);
+ 			aD.insertAeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
+ 			if (publico) {
+				p.setFinanciacion(financiacion);
+	 			p.setNTrabajadores(num_trab);
+			}else {
+				p.setNSocios(num_soc);
+			} 			
  			o1.add(p);
  			
  			return true;
  		}
      }
      
-     public void modificarAeropuerto(String nombre, String apellido, int edad) {
+     public void modificarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
      	//Modificar objeto de la tabla
-     	Aeropuerto p = new Aeropuerto(nombre, apellido, edad);
+     	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad);
      	for (int i = 0; i < o1.size(); i++) {
  			if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
- 				aD.modPersona(tbAeropuerto.getSelectionModel().getSelectedItem().getNombre(),nombre, apellido, edad);
+ 				aD.modAeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(),nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
+ 				if (publico) {
+ 					p.setFinanciacion(financiacion);
+ 		 			p.setNTrabajadores(num_trab);
+ 				}else {
+ 					p.setNSocios(num_soc);
+ 				}
  				o1.set(i, p);
  			}
  		}
@@ -148,7 +174,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
     	//Abrir ventana modal
-		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
     	Stage stage = new Stage();
     	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
     	loader.setController(ejLC);
@@ -169,6 +195,39 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
    
+    @FXML
+    void editarAeropuerto(ActionEvent event) {
+    	//Comprobar que hay seleccionado un objeto en la tabla
+    	if (tbAeropuerto.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ningun aeropuerto de la tabla!");
+            alert.showAndWait();
+		}else {
+			modificar=true;
+			try {
+				//Abrir ventana modal
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+		    	Stage stage = new Stage();
+		    	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
+		    	loader.setController(ejLC);
+		    	EjercicioLControllerAniadirAeropuertos ejLC2 = loader.getController();
+		    	ejLC2.setControlerL(this);
+		    	Parent root= loader.load();
+		        stage.setScene(new Scene(root,500,700));
+		        //stage.setResizable(false);
+		        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
+		        stage.setTitle("Editar Aeropuerto");
+		        stage.initModality(Modality.APPLICATION_MODAL);
+		        stage.showAndWait();
+	    	}catch (Exception e) {
+	    		System.out.println(e.getMessage());
+			}
+		}
+    }
+    
     public void initialize(URL location, ResourceBundle resources) {
     	//Valores de la columna de la tabla
     	lsId.setCellValueFactory(new PropertyValueFactory<Aeropuerto, Integer>("id"));

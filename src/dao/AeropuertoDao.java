@@ -14,18 +14,18 @@ import model.Aeropuerto;
 public class AeropuertoDao {
     private ConexionBDAeropuertos conexion;
     
-    public int ultimoID() {
+    public int ultimoIDAer() {
     	//Saca el ultimo id
     	int id=-1;
     	try {
             conexion = new ConexionBDAeropuertos();        	
-        	String consulta = "select id from Persona";
+        	String consulta = "select id from aeropuertos";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   
 			 while (rs.next()) {
-		            int idPersona = rs.getInt("id");
-		            if (idPersona>id) {
-						id=idPersona;
+		            int idA = rs.getInt("id");
+		            if (idA>id) {
+						id=idA;
 					}
 			 }             
 			rs.close();       
@@ -37,36 +37,113 @@ public class AeropuertoDao {
     	return id;
     }
     
-    private void insertDireccion() {
-    	
+    private int ultimoIDDir() {
+    	//Saca el ultimo id
+    	int id=-1;
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select id from direcciones";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+		            int idD = rs.getInt("id");
+		            if (idD>id) {
+						id=idD;
+					}
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+    	id=id+1;
+    	return id;
     }
     
-    public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad) {
+    private int insertDireccion(String pais, String ciudad, String calle, int numero) {
+    	int id_direccion=ultimoIDDir();
     	//Inserta objeto en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "INSERT INTO direcciones(id,pais,ciudad,calle,numero) VALUES("+id_direccion+",'"+pais+"','"+ciudad+"','"+calle+"', "+numero+")";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    	
+    	return id_direccion;
+    }
+    
+    private int modDireccion(String pais, String ciudad, String calle, int numero, int id) {
+    	
+    	int id_direccion=-1;
+    	//modificar objeto en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();
+            String consulta2 = "select id_direccion from aeropuertos.aeropuertos where id="+id;
+            PreparedStatement pstmt2 = conexion.getConexion().prepareStatement(consulta2);      
+       	 	ResultSet rs2 = pstmt2.executeQuery();   
+			rs2.next();
+			id_direccion = rs2.getInt("id_direccion");
+        	
+			String consulta = "UPDATE direcciones SET pais = '"+pais+"',ciudad = '"+ciudad+"',calle = '"+calle+"',numero = "+numero+" WHERE id = "+id_direccion;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    	
+    	return id_direccion;
+    }
+    
+    public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+    	//Inserta objeto en la BBDD
+    	int id_direccion = insertDireccion(pais, ciudad, calle, numero);
     	try {
             conexion = new ConexionBDAeropuertos();        	
         	String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion) VALUES("+id+",'"+nombre+"',"+anio+","+capacidad+", "+id_direccion+")";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
 			pstmt.execute();
+			if (publico) {
+				consulta = "INSERT INTO aeropuertos_publicos(id_aeropuerto,financiacion,num_trabajadores) VALUES("+id+","+financiacion+","+num_trab+")";
+	        	pstmt = conexion.getConexion().prepareStatement(consulta);
+				pstmt.execute();
+			}else {
+				consulta = "INSERT INTO aeropuertos_privados(id_aeropuerto,numero_socios) VALUES("+id+","+num_soc+")";
+	        	pstmt = conexion.getConexion().prepareStatement(consulta);  
+				pstmt.execute();
+			}
 	        conexion.CloseConexion();
 	    } catch (SQLException e) {	    	
 	    	System.out.println(e.getMessage());
 	    }
     }
     
-   /* public void modPersona(String nombreV,String nombre, String apellidos, int edad) {
+    public void modAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
     	//Modifica objeto en la BBDD
-    	int id = buscarIDNombre(nombreV);
+    	int id_direccion = modDireccion(pais, ciudad, calle, numero, id);
     	try {
-            conexion = new ConexionBDAeropuertos();        	
-        	String consulta = "UPDATE personas.Persona SET nombre = '"+nombre+"', apellidos = '"+apellidos+"', edad = "+edad+" WHERE id = "+id;
+	        conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "UPDATE aeropuertos.aeropuertos SET nombre = '"+nombre+"', anio_inauguracion = "+anio+", capacidad = "+capacidad+", id_direccion = "+id_direccion+" WHERE id = "+id;
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
 			pstmt.execute();
+			if (publico) {
+				consulta = "UPDATE aeropuertos.aeropuertos_publicos SET financiacion = "+financiacion+", num_trabajadores ="+num_trab+" WHERE id_aeropuerto = "+id;
+	        	pstmt = conexion.getConexion().prepareStatement(consulta);
+				pstmt.execute();
+			}else {
+				consulta = "UPDATE aeropuertos.aeropuertos_privados SET numero_socios = "+num_soc+" WHERE id_aeropuerto = "+id;
+	        	pstmt = conexion.getConexion().prepareStatement(consulta);  
+				pstmt.execute();
+			}
 	        conexion.CloseConexion();
 	    } catch (SQLException e) {	    	
 	    	System.out.println(e.getMessage());
 	    }
-    }*/
+    }
     
     public boolean validarUser(String user, String password){
     	//Validar inicio de sesion

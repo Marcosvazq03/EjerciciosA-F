@@ -109,101 +109,131 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
     
     @FXML
     void guardar(ActionEvent event) {
-    	try {
-        	//Comprobar que en un numero
-    		boolean esNumNumero = esNumero(txtNumero);
-        	boolean esNumAnio = esNumero(txtAnio);
-        	boolean esNumCapacidad = esNumero(txtCapacidad);
-        	boolean esNumNTrabajadores = esNumero(txtNTrabajadores);
-        	boolean esNumNSocios = esNumero(txtNSocio);
-        	boolean esNumFinanciacion=true;
-        	if (!txtFinanciacion.getText().matches("^-?[0-9]+([\\.,][0-9]+)?$")) {
+    	
+    	//Comprobar que en un numero
+		boolean esNumNumero = esNumero(txtNumero);
+    	boolean esNumAnio = esNumero(txtAnio);
+    	boolean esNumCapacidad = esNumero(txtCapacidad);
+    	boolean esNumNTrabajadores = true;
+    	boolean esNumNSocios = true;
+    	boolean esNumFinanciacion=true;
+    	
+    	
+    	//Alerta introducir todos los datos
+    	boolean publico=true;
+    	boolean mal = false;
+    	if (rbPublico.isSelected()) {
+    		if (!txtFinanciacion.getText().matches("^-?[0-9]+([\\.,][0-9]+)?$")) {
         		esNumFinanciacion=false;
 			}
-        	
-        	//Alerta introducir todos los datos
-        	if (rbPublico.isSelected()) {
-        		if (txtNombre.getText().toString().equals("") || txtPais.getText().toString().equals("") 
-        				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("") 
-        				|| esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
-        				|| esNumNTrabajadores==false) {
-            		String err = "";
-        			if (txtNombre.getText().toString().equals("") || txtPais.getText().toString().equals("") 
-        				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("")) {
-						err="Rellenar todos los campos\n";
-					}
-        			String err2 = "";
-        			if (esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
-            				|| esNumNTrabajadores==false) {
-						err2="Los campos no tienen el correcto formato";
-					}
-            		
-            		Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("TUS DATOS");
-                    alert.setHeaderText(null);
-                    alert.setContentText(err+err2);
-                    alert.showAndWait();
-    			}else {
-    				/*if (ejLControllerAeropuerto.isModificar()) {
-    					ejLControllerAeropuerto.modificarPersona(txtNombre.getText().toString(), txtApellido.getText().toString(), Integer.parseInt(txtEdad.getText().toString()));
-    					
-    					//Ventana de informacion
-    		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    		            alert.setTitle("Info");
-    		            alert.setHeaderText(null);
-    		            alert.setContentText("Persona editada correctamente");
-    		            alert.showAndWait();
-    		          
-    		            //Cerrar ventana modal
-    		        	//Me devuelve el elemento al que hice click
-    		        	Node source = (Node) event.getSource();     
-    		        	//Me devuelve la ventana donde se encuentra el elemento
-    		        	Stage stage = (Stage) source.getScene().getWindow();    
-    		        	stage.close();
-    				}else {*/
-    					if (ejLControllerAeropuerto.crearAeropuerto(txtNombre.getText().toString(), txtApellido.getText().toString(),Integer.parseInt(txtEdad.getText().toString()))) {
-    						//Ventana de informacion
-    			        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    			            alert.setTitle("Info");
-    			            alert.setHeaderText(null);
-    			            alert.setContentText("Aeropuerto añadido correctamente");
-    			            alert.showAndWait();
-    			          
-    			            //Cerrar ventana modal
-    			        	//Me devuelve el elemento al que hice click
-    			        	Node source = (Node) event.getSource();     
-    			        	//Me devuelve la ventana donde se encuentra el elemento
-    			        	Stage stage = (Stage) source.getScene().getWindow();    
-    			        	stage.close();
-    					}else {
-    						//Alerta persona existe en la tabla
-    						Alert alert = new Alert(Alert.AlertType.ERROR);
-    		                alert.setTitle("TUS DATOS");
-    		                alert.setHeaderText(null);
-    		                alert.setContentText("Aeropuerto ya existe!");
-    		                alert.showAndWait();
-    					}
-    				//}
-    			}
-			}        	
-        } catch (NumberFormatException e) {
-        	//Ventana error formato no numerico
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+    		esNumNTrabajadores = esNumero(txtNTrabajadores);
+			if (txtFinanciacion.getText().equals("") || txtNTrabajadores.getText().equals("")){
+				mal=true;
+			}
+			txtNSocio.setText("0");
+		}
+    	
+    	if (rbPrivado.isSelected()) {
+    		publico=false;
+    		esNumNSocios = esNumero(txtNSocio);
+    		if (txtNSocio.getText().equals("")){
+				mal=true;
+			}
+    		txtFinanciacion.setText("0");
+    		txtNTrabajadores.setText("0");
+    	}
+		if (txtNombre.getText().toString().equals("") || txtPais.getText().toString().equals("") 
+				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("") 
+				|| esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
+				|| esNumNTrabajadores==false || esNumNSocios==false || mal) {
+    		String err = "";
+			if (txtNombre.getText().toString().equals("") || txtPais.getText().toString().equals("") 
+				|| txtCiudad.getText().toString().equals("") || txtCalle.getText().toString().equals("") || mal) {
+				err="Rellenar todos los campos\n";
+			}
+			String err2 = "";
+			if (esNumNumero==false || esNumAnio==false || esNumCapacidad==false || esNumFinanciacion==false 
+    				|| esNumNTrabajadores==false || esNumNSocios==false) {
+				err2="Los campos no tienen el correcto formato";
+			}
+    		
+    		Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("TUS DATOS");
             alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Formato incorrecto");
+            alert.setContentText(err+err2);
             alert.showAndWait();
-        }
+		}else {
+			if (ejLControllerAeropuerto.isModificar()) {
+				ejLControllerAeropuerto.modificarAeropuerto(txtNombre.getText().toString(), txtPais.getText().toString(), txtCiudad.getText().toString(), 
+						txtCalle.getText().toString(), Integer.parseInt(txtNumero.getText().toString()), Integer.parseInt(txtAnio.getText().toString()), 
+						Integer.parseInt(txtCapacidad.getText().toString()), publico, Integer.parseInt(txtFinanciacion.getText().toString()), 
+						Integer.parseInt(txtNTrabajadores.getText().toString()), Integer.parseInt(txtNSocio.getText().toString()));
+				
+				//Ventana de informacion
+	        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	            alert.setTitle("Info");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Aeropuerto editado correctamente");
+	            alert.showAndWait();
+	          
+	            //Cerrar ventana modal
+	        	//Me devuelve el elemento al que hice click
+	        	Node source = (Node) event.getSource();     
+	        	//Me devuelve la ventana donde se encuentra el elemento
+	        	Stage stage = (Stage) source.getScene().getWindow();    
+	        	stage.close();
+			}else {
+				if (ejLControllerAeropuerto.crearAeropuerto(txtNombre.getText().toString(), txtPais.getText().toString(), txtCiudad.getText().toString(), 
+						txtCalle.getText().toString(), Integer.parseInt(txtNumero.getText().toString()), Integer.parseInt(txtAnio.getText().toString()), 
+						Integer.parseInt(txtCapacidad.getText().toString()), publico, Integer.parseInt(txtFinanciacion.getText().toString()), 
+						Integer.parseInt(txtNTrabajadores.getText().toString()), Integer.parseInt(txtNSocio.getText().toString()))) {
+					//Ventana de informacion
+		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		            alert.setTitle("Info");
+		            alert.setHeaderText(null);
+		            alert.setContentText("Aeropuerto añadido correctamente");
+		            alert.showAndWait();
+		          
+		            //Cerrar ventana modal
+		        	//Me devuelve el elemento al que hice click
+		        	Node source = (Node) event.getSource();     
+		        	//Me devuelve la ventana donde se encuentra el elemento
+		        	Stage stage = (Stage) source.getScene().getWindow();    
+		        	stage.close();
+				}else {
+					//Alerta persona existe en la tabla
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+	                alert.setTitle("TUS DATOS");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Aeropuerto ya existe!");
+	                alert.showAndWait();
+				}
+			}
+		}
     }
     
     public void initialize(URL location, ResourceBundle resources) {
-    	/*if (ejLControllerAeropuerto!=null) {
+    	if (ejLControllerAeropuerto!=null) {
     		if (ejLControllerAeropuerto.isModificar()) {
-				txtNombre.setText(ejLControllerAeropuerto.getTbPersona().getSelectionModel().getSelectedItem().getNombre());
-				txtApellido.setText(ejLControllerAeropuerto.getTbPersona().getSelectionModel().getSelectedItem().getApellido());
-				txtEdad.setText(ejLControllerAeropuerto.getTbPersona().getSelectionModel().getSelectedItem().getEdad()+"");
+				txtNombre.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getNombre());
+				txtPais.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getPais());
+				txtCiudad.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getCiudad());
+				txtCalle.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getCalle());
+				txtNumero.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getNumero()+"");
+				txtAnio.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getAno()+"");
+				txtCapacidad.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getCapacidad()+"");
+				txtNSocio.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getNSocios()+"");
+				txtFinanciacion.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getFinanciacion()+"");
+				txtNTrabajadores.setText(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getNTrabajadores()+"");
+				if (ejLControllerAeropuerto.getRbPrivados().isSelected()) {
+					rbPrivado.setSelected(true);
+					rbPublico.setSelected(false);
+					clickPrivado(null);
+				}
+				rbPrivado.setDisable(true);
+				rbPublico.setDisable(true);
 			}
-		}*/
+		}
     }
     
     public void setControlerL(EjercicioLControllerAeropuertos ej) {
