@@ -174,7 +174,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
     	//Abrir ventana modal
-		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
     	Stage stage = new Stage();
     	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
     	loader.setController(ejLC);
@@ -209,7 +209,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 			modificar=true;
 			try {
 				//Abrir ventana modal
-				FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
 		    	Stage stage = new Stage();
 		    	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
 		    	loader.setController(ejLC);
@@ -252,6 +252,51 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	        alert.setTitle("Info");
 	        alert.setHeaderText(null);
 	        alert.setContentText("Aeropuerto eliminado correctamente");
+	        alert.showAndWait();
+	        
+		}
+    }
+    
+    @FXML
+    void infoAeropuerto(ActionEvent event) {
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbAeropuerto.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ningun aeropuerto de la tabla!");
+            alert.showAndWait();
+		}else {
+			//Informacion objeto de la tabla
+			String financiacion="";
+			String nTrabajadores="";
+			String nSocios="";
+			String privacidad="Publico\n";
+			if (rbPrivados.isSelected()) {
+				privacidad="Privado\n";
+				nSocios="Numero de socios: "+tbAeropuerto.getSelectionModel().getSelectedItem().getNSocios()+"\n";
+			}else {
+				financiacion="Financiacion: "+tbAeropuerto.getSelectionModel().getSelectedItem().getFinanciacion()+"\n";
+				nTrabajadores="Numero de trabajadores: "+tbAeropuerto.getSelectionModel().getSelectedItem().getNTrabajadores()+"\n";
+			}
+			String aviones = aD.listarAviones(tbAeropuerto.getSelectionModel().getSelectedItem().getId());
+	    	String mensaje="Nombre: "+tbAeropuerto.getSelectionModel().getSelectedItem().getNombre()+"\n"
+	    			+ "Pais: "+tbAeropuerto.getSelectionModel().getSelectedItem().getPais()+"\n"
+	    			+ "Direccion: C. "+tbAeropuerto.getSelectionModel().getSelectedItem().getCalle()+"\n"
+	    			+ "Año de inaguracion: "+tbAeropuerto.getSelectionModel().getSelectedItem().getAno()+"\n"
+	    			+ "Capacidad: "+tbAeropuerto.getSelectionModel().getSelectedItem().getCapacidad()+"\n"
+	    			+ "Aviones: \n"
+	    			+aviones
+	    			+privacidad
+	    			+financiacion
+	    			+nTrabajadores
+	    			+nSocios;
+	    	
+	    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	        alert.setTitle("Informacion");
+	        alert.setHeaderText(null);
+	        alert.setContentText(mensaje);
 	        alert.showAndWait();
 	        
 		}

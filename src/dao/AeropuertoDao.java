@@ -61,6 +61,40 @@ public class AeropuertoDao {
     	return id;
     }
     
+    public String listarAviones(int id) {
+    	String aviones="";
+    	
+    	try {
+    		conexion = new ConexionBDAeropuertos();
+        	String consulta = "select * from aeropuertos.aviones";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+				 int id_aeropuerto = rs.getInt("id_aeropuerto");
+				 if (id == id_aeropuerto) {
+					 String modelo = rs.getString("modelo");
+					 int numero_asientos = rs.getInt("numero_asientos");
+					 int velocidad_maxima = rs.getInt("velocidad_maxima");
+					 int activado = rs.getInt("activado");
+					 String txtActivado="  Desactivado";
+					 if (activado==1) {
+						txtActivado="  Activado";
+					}
+					 aviones="  Modelo: "+modelo+"\n"
+					 		+ "  Numero de asientos: "+numero_asientos+"\n"
+					 		+ "  Velocidad maxima: "+velocidad_maxima+"\n"
+					 		+ txtActivado +"\n";
+				}				 
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    	
+    	return aviones;
+    }
+    
     private int insertDireccion(String pais, String ciudad, String calle, int numero) {
     	int id_direccion=ultimoIDDir();
     	//Inserta objeto en la BBDD
