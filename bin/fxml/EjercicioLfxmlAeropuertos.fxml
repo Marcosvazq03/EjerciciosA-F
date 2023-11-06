@@ -82,8 +82,8 @@
           <Menu mnemonicParsing="false" text="Aeropuertos">
             <items>
               <MenuItem fx:id="miAniadir" mnemonicParsing="false" onAction="#aniadirAeropuerto" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Borrar" />
+                  <MenuItem fx:id="miEditar" mnemonicParsing="false" onAction="#editarAeropuerto" text="Editar" />
+                  <MenuItem mnemonicParsing="false" onAction="#borrarAeropuerto" text="Borrar" />
                   <MenuItem mnemonicParsing="false" text="Mostrar informacion" />
             </items>
           </Menu>

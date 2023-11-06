@@ -174,7 +174,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
     	//Abrir ventana modal
-		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
     	Stage stage = new Stage();
     	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
     	loader.setController(ejLC);
@@ -209,7 +209,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 			modificar=true;
 			try {
 				//Abrir ventana modal
-				FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
 		    	Stage stage = new Stage();
 		    	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
 		    	loader.setController(ejLC);
@@ -225,6 +225,35 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	    	}catch (Exception e) {
 	    		System.out.println(e.getMessage());
 			}
+		}
+    }
+    
+    @FXML
+    void borrarAeropuerto(ActionEvent event) {
+    	//Comprobar que hay seleccionado una persona en la tabla
+    	if (tbAeropuerto.getSelectionModel().isEmpty()) {
+    		//Ventana error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("No has seleccionado ningun aeropuerto de la tabla!");
+            alert.showAndWait();
+		}else {
+			//Eliminar objeto de la tabla
+	    	for (int i = 0; i < o1.size(); i++) {
+				if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
+					aD.elimAeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId());
+					o1.remove(i);
+				}
+			}
+			
+			//Ventana de informacion
+	    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	        alert.setTitle("Info");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Aeropuerto eliminado correctamente");
+	        alert.showAndWait();
+	        
 		}
     }
     

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import conexion.ConexionBD;
 import conexion.ConexionBDAeropuertos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,6 +98,23 @@ public class AeropuertoDao {
 	    }
     	
     	return id_direccion;
+    }
+    
+    public void elimAeropuerto(int id) {
+    	//Eliminar Persona en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+            String consulta = "DELETE FROM aeropuertos.aviones WHERE id_aeropuerto = "+id;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+			
+        	consulta = "DELETE FROM aeropuertos.aeropuertos WHERE id = "+id;
+        	pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
     }
     
     public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
