@@ -154,6 +154,29 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			}
  		}
      }
+     
+    // Metodos de Avion
+  	public void crearAvion(String modelo, int numero_asiento, int velocidad_maxima, int activado, int id_aeropuerto) {
+		//Crear objeto
+		aD.insertAvion(aD.ultimoIDAvi(), modelo, numero_asiento, velocidad_maxima, activado, id_aeropuerto);
+	}
+      
+	  /*public void modificarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+	  	//Modificar objeto de la tabla
+	  	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad);
+	  	for (int i = 0; i < o1.size(); i++) {
+			if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
+				aD.modAeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(),nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
+				if (publico) {
+					p.setFinanciacion(financiacion);
+		 			p.setNTrabajadores(num_trab);
+				}else {
+					p.setNSocios(num_soc);
+				}
+				o1.set(i, p);
+			}
+		}
+	  }*/
     
 	@FXML
     void clickPrivado(ActionEvent event) {
@@ -174,7 +197,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
     	//Abrir ventana modal
-		FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
     	Stage stage = new Stage();
     	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
     	loader.setController(ejLC);
@@ -184,7 +207,6 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	    	EjercicioLControllerAniadirAeropuertos ejLC2 = loader.getController();
 	    	ejLC2.setControlerL(this);
 	        stage.setScene(new Scene(root,500,700));
-	        //stage.setResizable(false);
 	        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
 	        stage.setTitle("Añadir Aeropuerto");
 	        stage.initModality(Modality.APPLICATION_MODAL);
@@ -209,7 +231,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 			modificar=true;
 			try {
 				//Abrir ventana modal
-				FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAeropuerto.fxml"));
 		    	Stage stage = new Stage();
 		    	EjercicioLControllerAniadirAeropuertos ejLC = new EjercicioLControllerAniadirAeropuertos();
 		    	loader.setController(ejLC);
@@ -217,7 +239,6 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		    	ejLC2.setControlerL(this);
 		    	Parent root= loader.load();
 		        stage.setScene(new Scene(root,500,700));
-		        //stage.setResizable(false);
 		        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
 		        stage.setTitle("Editar Aeropuerto");
 		        stage.initModality(Modality.APPLICATION_MODAL);
@@ -300,6 +321,39 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	        alert.showAndWait();
 	        
 		}
+    }
+    
+    @FXML
+    void aniadirAvion(ActionEvent event) {
+    	//Abrir ventana modal
+		FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlAniadirAvion.fxml"));
+    	Stage stage = new Stage();
+    	EjercicioLControllerAniadirAviones ejLC = new EjercicioLControllerAniadirAviones();
+    	loader.setController(ejLC);
+    	Parent root;
+		try {
+			root = loader.load();
+	    	EjercicioLControllerAniadirAviones ejLC2 = loader.getController();
+	    	ejLC2.setControlerL(this);
+	        stage.setScene(new Scene(root,500,500));
+	        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
+	        stage.setTitle("Añadir Avion");
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    void activarDesactivarAvion(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void borrarAvion(ActionEvent event) {
+
     }
     
     public void initialize(URL location, ResourceBundle resources) {

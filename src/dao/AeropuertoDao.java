@@ -61,6 +61,29 @@ public class AeropuertoDao {
     	return id;
     }
     
+    public int ultimoIDAvi() {
+    	//Saca el ultimo id
+    	int id=-1;
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select id from aviones";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+		            int idA = rs.getInt("id");
+		            if (idA>id) {
+						id=idA;
+					}
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+    	id=id+1;
+    	return id;
+    }
+    
     public String listarAviones(int id) {
     	String aviones="";
     	
@@ -197,6 +220,19 @@ public class AeropuertoDao {
 	    }
     }
     
+    public void insertAvion(int id, String modelo, int numero_asiento, int velocidad_maxima, int activado, int id_aeropuerto) {
+    	//Inserta objeto en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "INSERT INTO aviones(id,modelo,numero_asientos,velocidad_maxima,activado,id_aeropuerto) VALUES("+id+",'"+modelo+"',"+numero_asiento+","+velocidad_maxima+", "+activado+","+id_aeropuerto+")";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    }
+    
     public boolean validarUser(String user, String password){
     	//Validar inicio de sesion
     	try {
@@ -312,7 +348,7 @@ public class AeropuertoDao {
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
 	    }    
-        return aeropuertos;    
+        return aeropuertos;
     }
     
 }
