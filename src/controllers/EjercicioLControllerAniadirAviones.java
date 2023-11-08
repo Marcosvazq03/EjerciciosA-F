@@ -3,6 +3,7 @@ package controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import dao.AeropuertoDao;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +24,9 @@ public class EjercicioLControllerAniadirAviones implements Initializable{
     
     @FXML
     private ComboBox<String> cbAeropuertos;
+    
+    @FXML
+    private ComboBox<String> cbAviones;
    
     @FXML
     private RadioButton rbActivado;
@@ -42,6 +46,7 @@ public class EjercicioLControllerAniadirAviones implements Initializable{
     @FXML
     private TextField txtVelMax;
 
+    private AeropuertoDao aD;
     
     @FXML
     void cancelar(ActionEvent event) {
@@ -88,7 +93,7 @@ public class EjercicioLControllerAniadirAviones implements Initializable{
             alert.setContentText(err+err2);
             alert.showAndWait();
 		}else {
-			/*if (ejLControllerAeropuerto.isModificar()) {
+			if (ejLControllerAeropuerto.isModificar()) {
 				ejLControllerAeropuerto.modificarAeropuerto();
 				
 				//Ventana de informacion
@@ -104,12 +109,12 @@ public class EjercicioLControllerAniadirAviones implements Initializable{
 	        	//Me devuelve la ventana donde se encuentra el elemento
 	        	Stage stage = (Stage) source.getScene().getWindow();    
 	        	stage.close();
-			}else {*/
+			}else {
 				int siActivado = 1;
 				if (rbDesactivado.isSelected()) {
 					siActivado=0;
 				}
-				ejLControllerAeropuerto.crearAvion(txtModelo.getText().toString(), Integer.parseInt(txtAsientos.getText().toString()), Integer.parseInt(txtVelMax.getText().toString()), siActivado);
+				ejLControllerAeropuerto.crearAvion(txtModelo.getText().toString(), Integer.parseInt(txtAsientos.getText().toString()), Integer.parseInt(txtVelMax.getText().toString()), siActivado, aD.buscarIDNombre(cbAeropuertos.getSelectionModel().getSelectedItem()));
 				
 				//Ventana de informacion
 	        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -125,18 +130,31 @@ public class EjercicioLControllerAniadirAviones implements Initializable{
 	        	Stage stage = (Stage) source.getScene().getWindow();    
 	        	stage.close();
 			}
-		//}
+		}
+    }
+    
+    @FXML
+    void cambiarAviones(ActionEvent event) {
+    	//Contenido del comboBox
+    	cbAviones.setItems(FXCollections.observableArrayList(aD.cargarAviones(aD.buscarIDNombre(cbAeropuertos.getSelectionModel().getSelectedItem()))));
+    	cbAviones.getSelectionModel().select(0);
     }
     
     public void initialize(URL location, ResourceBundle resources) {
+    	aD = new AeropuertoDao();
+    	
     	//Contenido del comboBox
-    	cbAeropuertos.setItems(FXCollections.observableArrayList("Menores de 18","Entre 18 y 30","Entre 31 y 50","Entre 51 y 70","Mayores de 70"));
-    	cbAeropuertos.getSelectionModel().select(0);
-    	/*if (ejLControllerAeropuerto!=null) {
+    	cbAeropuertos.setItems(FXCollections.observableArrayList(aD.cargarAeropuertos()));
+    	cbAeropuertos.getSelectionModel().selectFirst();
+    	
+    	if (ejLControllerAeropuerto!=null) {
+    		System.out.println("holaa");
     		if (ejLControllerAeropuerto.isModificar()) {
-				
+    			
+    			//Contenido del comboBox
+    	    	cambiarAviones(null);
 			}
-		}*/
+		}
     }
     
     public void setControlerL(EjercicioLControllerAeropuertos ej) {

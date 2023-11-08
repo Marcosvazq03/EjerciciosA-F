@@ -103,7 +103,7 @@ public class AeropuertoDao {
 					 if (activado==1) {
 						txtActivado="  Activado";
 					}
-					 aviones="  Modelo: "+modelo+"\n"
+					 aviones=aviones+"  Modelo: "+modelo+"\n"
 					 		+ "  Numero de asientos: "+numero_asientos+"\n"
 					 		+ "  Velocidad maxima: "+velocidad_maxima+"\n"
 					 		+ txtActivado +"\n";
@@ -253,6 +253,68 @@ public class AeropuertoDao {
 	    	e.printStackTrace();
 	    }
     	return false;
+    }
+    
+    public int buscarIDNombre(String nombreB){
+    	//Busca el id de la persona por su nombre
+    	int id=-1;
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select * from aeropuertos";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+		            int idAero = rs.getInt("id");
+		            String nombre = rs.getString("nombre");
+		            if (nombre.equals(nombreB)) {
+						id=idAero;
+						break;
+					}
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }
+    	return id;
+    }
+    
+    public ObservableList<String> cargarAviones(int id_aeropuerto)  {
+    	ObservableList<String> aeropuertos = FXCollections.observableArrayList();
+        try {
+        	conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select * from aviones where id_aeropuerto = "+id_aeropuerto;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+				 String nombre = rs.getString("modelo");
+				 aeropuertos.add(nombre);
+			 }
+			 rs.close();       
+	         conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+        return aeropuertos;    
+    }
+    
+    public ObservableList<String> cargarAeropuertos()  {
+    	ObservableList<String> aeropuertos = FXCollections.observableArrayList();
+        try {
+        	conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select * from aeropuertos";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+				 String nombre = rs.getString("nombre");
+				 aeropuertos.add(nombre);
+			 }
+			 rs.close();       
+	         conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+        return aeropuertos;    
     }
     
     public ObservableList<Aeropuerto> cargarAeropuertosPri()  {

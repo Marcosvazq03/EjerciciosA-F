@@ -348,7 +348,26 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     
     @FXML
     void activarDesactivarAvion(ActionEvent event) {
-
+    	modificar=true;
+    	//Abrir ventana modal
+		try {
+			FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlActDesAvion.fxml"));
+	    	Stage stage = new Stage();
+	    	EjercicioLControllerAniadirAviones ejLC = new EjercicioLControllerAniadirAviones();
+	    	loader.setController(ejLC);
+	    	Parent root;
+	    	EjercicioLControllerAniadirAviones ejLC2 = loader.getController();
+	    	ejLC2.setControlerL(this);
+			root = loader.load();
+	        stage.setScene(new Scene(root,500,300));
+	        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
+	        stage.setTitle("Activar/Desactivar Avion");
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     @FXML
