@@ -98,6 +98,8 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     
     private boolean modificar;
     
+    private boolean borrar;
+    
     private AeropuertoDao aD;
     
     public TableView<Aeropuerto> getTbAeropuerto() {
@@ -111,7 +113,11 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		return modificar;
 	}
 
-    // Metodos de Aeropuerto
+    public boolean isBorrar() {
+		return borrar;
+	}
+
+	// Metodos de Aeropuerto
  	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
      	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad);
      	boolean esta=false;
@@ -161,22 +167,15 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		aD.insertAvion(aD.ultimoIDAvi(), modelo, numero_asiento, velocidad_maxima, activado, id_aeropuerto);
 	}
       
-	  /*public void modificarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+	public void modificarAvion(String nombre, int activado) {
 	  	//Modificar objeto de la tabla
-	  	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad);
-	  	for (int i = 0; i < o1.size(); i++) {
-			if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
-				aD.modAeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(),nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
-				if (publico) {
-					p.setFinanciacion(financiacion);
-		 			p.setNTrabajadores(num_trab);
-				}else {
-					p.setNSocios(num_soc);
-				}
-				o1.set(i, p);
-			}
-		}
-	  }*/
+	  	aD.modAvion(aD.buscarIDModelo(nombre),activado);
+	}
+	
+	public void borrarAvion(String nombre) {
+	  	//Modificar objeto de la tabla
+	  	aD.elimAvion(aD.buscarIDModelo(nombre));
+	}
     
 	@FXML
     void clickPrivado(ActionEvent event) {
@@ -372,7 +371,24 @@ public class EjercicioLControllerAeropuertos implements Initializable{
     
     @FXML
     void borrarAvion(ActionEvent event) {
-
+    	borrar=true;
+    	//Abrir ventana modal
+		try {
+			FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/EjercicioLfxmlActDesAvion.fxml"));
+	    	Stage stage = new Stage();
+	    	EjercicioLControllerAniadirAviones ejLC = new EjercicioLControllerAniadirAviones();
+	    	loader.setController(ejLC);
+	    	ejLC.setControlerL(this);
+			Parent root = loader.load();
+	        stage.setScene(new Scene(root,500,300));
+	        stage.initOwner(this.tbAeropuerto.getScene().getWindow());
+	        stage.setTitle("Eliminar Avion");
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public void initialize(URL location, ResourceBundle resources) {

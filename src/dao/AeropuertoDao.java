@@ -156,9 +156,22 @@ public class AeropuertoDao {
     	
     	return id_direccion;
     }
+
+    public void elimAvion(int id) {
+    	//Eliminar objeto en la BBDD
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+            String consulta = "DELETE FROM aeropuertos.aviones WHERE id = "+id;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    }
     
     public void elimAeropuerto(int id) {
-    	//Eliminar Persona en la BBDD
+    	//Eliminar objeto en la BBDD
     	try {
             conexion = new ConexionBDAeropuertos();        	
             String consulta = "DELETE FROM aeropuertos.aviones WHERE id_aeropuerto = "+id;
@@ -191,6 +204,19 @@ public class AeropuertoDao {
 	        	pstmt = conexion.getConexion().prepareStatement(consulta);  
 				pstmt.execute();
 			}
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	System.out.println(e.getMessage());
+	    }
+    }
+    
+    public void modAvion(int id, int activado) {
+    	//Modifica objeto en la BBDD
+    	try {
+	        conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "UPDATE aeropuertos.aviones SET activado = "+activado+" WHERE id = "+id;
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+			pstmt.execute();
 	        conexion.CloseConexion();
 	    } catch (SQLException e) {	    	
 	    	System.out.println(e.getMessage());
@@ -255,8 +281,32 @@ public class AeropuertoDao {
     	return false;
     }
     
+    public int buscarIDModelo(String nombreB){
+    	//Busca el id por su modelo
+    	int id=-1;
+    	try {
+            conexion = new ConexionBDAeropuertos();        	
+        	String consulta = "select * from aviones";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+			 while (rs.next()) {
+		            int idAero = rs.getInt("id");
+		            String nombre = rs.getString("modelo");
+		            if (nombre.equals(nombreB)) {
+						id=idAero;
+						break;
+					}
+			 }             
+			rs.close();       
+	        conexion.CloseConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }
+    	return id;
+    }
+    
     public int buscarIDNombre(String nombreB){
-    	//Busca el id de la persona por su nombre
+    	//Busca el id por su nombre
     	int id=-1;
     	try {
             conexion = new ConexionBDAeropuertos();        	
@@ -285,7 +335,7 @@ public class AeropuertoDao {
         	conexion = new ConexionBDAeropuertos();        	
         	String consulta = "select * from aviones where id_aeropuerto = "+id_aeropuerto;
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	ResultSet rs = pstmt.executeQuery();   
+        	ResultSet rs = pstmt.executeQuery();
 			 while (rs.next()) {
 				 String nombre = rs.getString("modelo");
 				 aeropuertos.add(nombre);
