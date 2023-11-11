@@ -117,7 +117,21 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		return borrar;
 	}
 
-	// Metodos de Aeropuerto
+	/**
+	 * Metodos de Aeropuerto
+	 * @param nombre
+	 * @param pais
+	 * @param ciudad
+	 * @param calle
+	 * @param numero
+	 * @param anio
+	 * @param capacidad
+	 * @param publico
+	 * @param financiacion
+	 * @param num_trab
+	 * @param num_soc
+	 * @return
+	 */
  	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
      	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad);
      	boolean esta=false;
@@ -143,7 +157,21 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			return true;
  		}
      }
-     
+ 	
+     /**
+      * Modificar objeto de la tabla
+      * @param nombre
+      * @param pais
+      * @param ciudad
+      * @param calle
+      * @param numero
+      * @param anio
+      * @param capacidad
+      * @param publico
+      * @param financiacion
+      * @param num_trab
+      * @param num_soc
+      */
      public void modificarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
      	//Modificar objeto de la tabla
      	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad);
@@ -162,16 +190,33 @@ public class EjercicioLControllerAeropuertos implements Initializable{
      }
      
     // Metodos de Avion
+     /**
+      * 
+      * @param modelo
+      * @param numero_asiento
+      * @param velocidad_maxima
+      * @param activado
+      * @param id_aeropuerto
+      */
   	public void crearAvion(String modelo, int numero_asiento, int velocidad_maxima, int activado, int id_aeropuerto) {
 		//Crear objeto
 		aD.insertAvion(aD.ultimoIDAvi(), modelo, numero_asiento, velocidad_maxima, activado, id_aeropuerto);
 	}
-      
+    
+  	/**
+  	 * 
+  	 * @param nombre
+  	 * @param activado
+  	 */
 	public void modificarAvion(String nombre, int activado) {
 	  	//Modificar objeto de la tabla
 	  	aD.modAvion(aD.buscarIDModelo(nombre),activado);
 	}
 	
+	/**
+	 * 
+	 * @param nombre
+	 */
 	public void borrarAvion(String nombre) {
 	  	//Modificar objeto de la tabla
 	  	aD.elimAvion(aD.buscarIDModelo(nombre));
@@ -193,6 +238,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		lsNTrabajadores.setVisible(true);
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
     	//Abrir ventana modal
@@ -216,6 +265,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
    
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void editarAeropuerto(ActionEvent event) {
     	//Comprobar que hay seleccionado un objeto en la tabla
@@ -248,6 +301,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void borrarAeropuerto(ActionEvent event) {
     	//Comprobar que hay seleccionado una persona en la tabla
@@ -277,6 +334,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void infoAeropuerto(ActionEvent event) {
     	//Comprobar que hay seleccionado una persona en la tabla
@@ -322,6 +383,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void aniadirAvion(ActionEvent event) {
     	//Abrir ventana modal
@@ -345,6 +410,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void activarDesactivarAvion(ActionEvent event) {
     	modificar=true;
@@ -369,6 +438,10 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		}
     }
     
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void borrarAvion(ActionEvent event) {
     	borrar=true;
