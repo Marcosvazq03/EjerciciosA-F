@@ -23,6 +23,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Persona;
@@ -40,6 +42,26 @@ public class EjercicioLControllerLogin implements Initializable{
     
     private AeropuertoDao aeDao;
 
+    /**
+     * 
+     * @param event
+     */
+    @FXML
+    void click_key_word(KeyEvent event) {
+    	if(event.getCode().equals(KeyCode.ENTER)) {
+    		login(null);
+    		return;
+    	}
+    	if(event.getCode().equals(KeyCode.ESCAPE)) {
+    		Stage stage = (Stage) btnLogin.getScene().getWindow();
+    		stage.close();
+    	}
+    }
+    
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void login(ActionEvent event) {
     	if (txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
