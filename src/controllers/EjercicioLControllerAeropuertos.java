@@ -24,6 +24,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Aeropuerto;
@@ -133,7 +135,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	 * @return
 	 */
  	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
-     	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad);
+     	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, null);
      	boolean esta=false;
  		if (o1 !=null) {
  			//Comprobar si existe en la tabla
@@ -174,7 +176,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
       */
      public void modificarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
      	//Modificar objeto de la tabla
-     	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad);
+     	Aeropuerto p = new Aeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(), nombre, pais, ciudad, calle, numero, anio, capacidad, null);
      	for (int i = 0; i < o1.size(); i++) {
  			if (tbAeropuerto.getSelectionModel().getSelectedItem()==o1.get(i)) {
  				aD.modAeropuerto(tbAeropuerto.getSelectionModel().getSelectedItem().getId(),nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
@@ -237,6 +239,16 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 		lsFinanciacion.setVisible(true);
 		lsNTrabajadores.setVisible(true);
     }
+    
+    @FXML
+    void table_mouse_clicked(MouseEvent event) {
+    	if(event.getButton().equals(MouseButton.PRIMARY)){
+            if(event.getClickCount() == 2 && tbAeropuerto.getSelectionModel().getSelectedIndex() != -1 ){
+                infoAeropuerto(null);
+            }
+        }
+    }
+
     
     /**
      * 

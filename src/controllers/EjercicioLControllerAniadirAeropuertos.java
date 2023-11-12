@@ -1,5 +1,9 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,6 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 
@@ -19,6 +27,9 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
     
     private EjercicioLControllerAeropuertos ejLControllerAeropuerto; 
    
+    @FXML
+    private ImageView imageSelected;
+    
     @FXML
     private Label lbFinanciacion;
 
@@ -66,7 +77,41 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
 
     @FXML
     private RadioButton rbPublico;
+    
+    private InputStream imageBinary = null;
 
+    protected InputStream seleccionarImagen(boolean editar) {
+    	InputStream imageBinary = null;
+    	FileChooser fileChooser = new FileChooser();
+    	Stage stage = new Stage();
+    	fileChooser.setTitle("Seleccionar Imagen ");
+    	ExtensionFilter jpgFilter = new ExtensionFilter("Imagen JPG (*.jpg)", "*.jpg");
+    	fileChooser.getExtensionFilters().add(jpgFilter);
+    	File imageFile = fileChooser.showOpenDialog(stage);
+    	if(imageFile != null) {
+    		try {
+    			Image img = new Image(imageFile.toURI().toString());
+				imageBinary = new FileInputStream(imageFile);
+				imageSelected.setVisible(true);
+	    		imageSelected.setImage(img);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+    	}else {
+    		if(!editar) {
+	    		imageSelected.setVisible(false);
+	    		imageSelected.setImage(null);
+    		}
+    	}
+    	return imageBinary;
+    }
+
+    
+	@FXML
+    void click_select_imagen(ActionEvent event) {
+		imageBinary = seleccionarImagen(false);
+	}
+    
     @FXML
     void clickPrivado(ActionEvent event) {
 		lbFinanciacion.setVisible(false);
@@ -234,6 +279,9 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
 				rbPublico.setDisable(true);
 			}
 		}
+    	if(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage() != null) {
+	 		imageSelected.setImage(new Image(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage()));
+	 	}
     }
     
     public void setControlerL(EjercicioLControllerAeropuertos ej) {

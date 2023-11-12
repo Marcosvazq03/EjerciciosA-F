@@ -1,6 +1,7 @@
 package dao;
 
 
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -389,6 +390,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
+				 InputStream image = rs2.getString("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      
@@ -400,7 +402,7 @@ public class AeropuertoDao {
 				 String calle = rs3.getString("calle");
 				 int numero = rs3.getInt("numero");
 				 
-				 Aeropuerto a = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad);
+				 Aeropuerto a = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad, image);
 	             a.setNSocios(nSocicos);
 				 aeropuertos.add(a);
 				 rs3.close();
@@ -437,6 +439,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
+				 InputStream image = rs2.getString("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      
@@ -448,7 +451,7 @@ public class AeropuertoDao {
 				 String calle = rs3.getString("calle");
 				 int numero = rs3.getInt("numero");
 				 
-				 Aeropuerto a = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad);
+				 Aeropuerto a = new Aeropuerto(id, nombre, pais, ciudad, calle, numero, anio, capacidad, image);
 	             a.setFinanciacion(financiacion);
 				 a.setNTrabajadores(nTrbajadores);
 				 aeropuertos.add(a);

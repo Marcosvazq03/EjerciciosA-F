@@ -1,14 +1,18 @@
 package model;
 
+import java.io.InputStream;
 import java.util.Objects;
+
+import javafx.scene.image.Image;
 
 //Clase Aeropuesto
 public class Aeropuerto {
 	
 	private String nombre, pais, ciudad, calle;
 	private int numero, id, ano, capacidad, nSocios, financiacion, nTrabajadores;
+	private InputStream image;
 	
-	public Aeropuerto(int id,String nombre, String pais, String ciudad, String calle, int numero, int ano, int capacidad) {
+	public Aeropuerto(int id,String nombre, String pais, String ciudad, String calle, int numero, int ano, int capacidad, InputStream img) {
 		this.id=id;
 		this.nombre=nombre;
 		this.pais=pais;
@@ -17,6 +21,7 @@ public class Aeropuerto {
 		this.numero=numero;
 		this.ano=ano;
 		this.capacidad=capacidad;
+		this.image=img;
 	}
 
 	public String getNombre() {
@@ -105,6 +110,14 @@ public class Aeropuerto {
 
 	public void setNTrabajadores(int nTrabajadores) {
 		this.nTrabajadores = nTrabajadores;
+	}
+	
+	public InputStream getImage() {
+		return image;
+	}
+
+	public void setImage(InputStream image) {
+		this.image = image;
 	}
 
 	@Override
