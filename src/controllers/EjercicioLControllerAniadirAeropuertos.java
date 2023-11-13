@@ -231,7 +231,7 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
 				if (ejLControllerAeropuerto.crearAeropuerto(txtNombre.getText().toString(), txtPais.getText().toString(), txtCiudad.getText().toString(), 
 						txtCalle.getText().toString(), Integer.parseInt(txtNumero.getText().toString()), Integer.parseInt(txtAnio.getText().toString()), 
 						Integer.parseInt(txtCapacidad.getText().toString()), publico, Integer.parseInt(txtFinanciacion.getText().toString()), 
-						Integer.parseInt(txtNTrabajadores.getText().toString()), Integer.parseInt(txtNSocio.getText().toString()))) {
+						Integer.parseInt(txtNTrabajadores.getText().toString()), Integer.parseInt(txtNSocio.getText().toString()), imageBinary)) {
 					//Ventana de informacion
 		        	Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		            alert.setTitle("Info");

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,9 +35,6 @@ import model.Aeropuerto;
 public class EjercicioLControllerAeropuertos implements Initializable{
     
     private EjercicioLControllerLogin ejLControllerLogin; 
-    
-    @FXML
-    private ImageView imageSelected;
     
     @FXML
     private TableColumn<Aeropuerto, Integer> lsAno;
@@ -138,7 +136,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
 	 * @param num_soc
 	 * @return
 	 */
- 	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+ 	public boolean crearAeropuerto(String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc, InputStream imagen) {
      	Aeropuerto p = new Aeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, null);
      	boolean esta=false;
  		if (o1 !=null) {
@@ -151,7 +149,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			return false;
  		}else {
  			//Crear y añadirla a la tabla
- 			aD.insertAeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc, imageSelected.getImage().getUrl());
+ 			aD.insertAeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc, imagen);
  			if (publico) {
 				p.setFinanciacion(financiacion);
 	 			p.setNTrabajadores(num_trab);
