@@ -188,12 +188,12 @@ public class AeropuertoDao {
 	    }
     }
     
-    public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc) {
+    public void insertAeropuerto(int id, String nombre, String pais, String ciudad, String calle, int numero, int anio, int capacidad, boolean publico, int financiacion, int num_trab, int num_soc, InputStream imagen) {
     	//Inserta objeto en la BBDD
     	int id_direccion = insertDireccion(pais, ciudad, calle, numero);
     	try {
             conexion = new ConexionBDAeropuertos();        	
-        	String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion) VALUES("+id+",'"+nombre+"',"+anio+","+capacidad+", "+id_direccion+")";
+        	String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion, imagen) VALUES("+id+",'"+nombre+"',"+anio+","+capacidad+", "+id_direccion+", "+imagen+")";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
 			pstmt.execute();
 			if (publico) {
@@ -390,7 +390,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
-				 InputStream image = rs2.getString("imagen");
+				 InputStream image = (InputStream) rs2.getBlob("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      
@@ -439,7 +439,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
-				 InputStream image = rs2.getString("imagen");
+				 InputStream image = (InputStream) rs2.getBlob("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      

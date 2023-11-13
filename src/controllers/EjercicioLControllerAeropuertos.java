@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -33,6 +34,9 @@ import model.Aeropuerto;
 public class EjercicioLControllerAeropuertos implements Initializable{
     
     private EjercicioLControllerLogin ejLControllerLogin; 
+    
+    @FXML
+    private ImageView imageSelected;
     
     @FXML
     private TableColumn<Aeropuerto, Integer> lsAno;
@@ -147,7 +151,7 @@ public class EjercicioLControllerAeropuertos implements Initializable{
  			return false;
  		}else {
  			//Crear y añadirla a la tabla
- 			aD.insertAeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc);
+ 			aD.insertAeropuerto(aD.ultimoIDAer(), nombre, pais, ciudad, calle, numero, anio, capacidad, publico, financiacion, num_trab, num_soc, imageSelected.getImage().getUrl());
  			if (publico) {
 				p.setFinanciacion(financiacion);
 	 			p.setNTrabajadores(num_trab);

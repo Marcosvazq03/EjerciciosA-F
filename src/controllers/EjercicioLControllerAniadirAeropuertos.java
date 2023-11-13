@@ -278,10 +278,11 @@ public class EjercicioLControllerAniadirAeropuertos implements Initializable{
 				rbPrivado.setDisable(true);
 				rbPublico.setDisable(true);
 			}
+    		if(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage() != null) {
+		 		imageSelected.setImage(new Image(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage()));
+		 	}
 		}
-    	if(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage() != null) {
-	 		imageSelected.setImage(new Image(ejLControllerAeropuerto.getTbAeropuerto().getSelectionModel().getSelectedItem().getImage()));
-	 	}
+    	
     }
     
     public void setControlerL(EjercicioLControllerAeropuertos ej) {
