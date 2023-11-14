@@ -1,6 +1,10 @@
 package dao;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -193,8 +197,18 @@ public class AeropuertoDao {
     	int id_direccion = insertDireccion(pais, ciudad, calle, numero);
     	try {
             conexion = new ConexionBDAeropuertos();        	
-        	String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion, imagen) VALUES("+id+",'"+nombre+"',"+anio+","+capacidad+", "+id_direccion+", "+imagen+")";
+            
+			String consulta = "INSERT INTO aeropuertos(id,nombre,anio_inauguracion, capacidad, id_direccion, imagen) VALUES(?,?,?,?,?,?)";
+			
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);  
+        	
+        	pstmt.setInt(1, id);
+        	pstmt.setString(2, nombre);
+        	pstmt.setInt(3, anio);
+        	pstmt.setInt(4, capacidad);
+        	pstmt.setInt(5, id_direccion);
+        	pstmt.setBinaryStream(6, imagen);
+        	
 			pstmt.execute();
 			if (publico) {
 				consulta = "INSERT INTO aeropuertos_publicos(id_aeropuerto,financiacion,num_trabajadores) VALUES("+id+","+financiacion+","+num_trab+")";
@@ -390,7 +404,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
-				 InputStream image = (InputStream) rs2.getBlob("imagen");
+				 InputStream image = (InputStream) rs2.getBinaryStream("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      
@@ -439,7 +453,7 @@ public class AeropuertoDao {
 				 int anio = rs2.getInt("anio_inauguracion");
 				 int capacidad = rs2.getInt("capacidad");
 				 int id_direccion = rs2.getInt("id_direccion");
-				 InputStream image = (InputStream) rs2.getBlob("imagen");
+				 InputStream image = rs2.getBinaryStream("imagen");
 				 
 				 String consulta3 = "select * from direcciones where id="+id_direccion;
 				 PreparedStatement pstmt3 = conexion.getConexion().prepareStatement(consulta3);      
