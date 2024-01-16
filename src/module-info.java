@@ -10,6 +10,7 @@ module EjerciciosAF {
 	requires javafx.graphics;
     requires javafx.base;
     requires java.sql;
+    requires de.jensd.fx.glyphs.fontawesome;
     
 	opens application to javafx.graphics, javafx.fxml;
 	opens controllers to javafx.graphics, javafx.fxml;
